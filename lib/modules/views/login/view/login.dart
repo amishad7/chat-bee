@@ -1,12 +1,17 @@
+import 'dart:developer';
+import 'package:firebase_project/modules/views/login/controller/Log-in-controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'globals.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    bool seePassword = loginController.Plogin.password;
+
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -96,7 +101,7 @@ class LoginView extends StatelessWidget {
                         color: Colors.blueAccent.withOpacity(0.4),
                       ),
                       child: TextFormField(
-                        obscureText: true,
+                        obscureText: seePassword,
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(
                             borderSide: BorderSide.none,
@@ -104,7 +109,9 @@ class LoginView extends StatelessWidget {
                           alignLabelWithHint: true,
                           hintText: "password",
                           suffixIcon: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              loginController.hidePassword();
+                            },
                             icon: const Icon(
                               Icons.lock,
                               color: Colors.white,
@@ -115,6 +122,28 @@ class LoginView extends StatelessWidget {
                             color: Colors.white,
                             fontSize: 16,
                           ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Transform.translate(
+                    offset: const Offset(110, 300),
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: Get.height / 19,
+                      width: Get.width / 4,
+
+                      // margin: const EdgeInsets.symmetric(horizontal: 20),
+                      //padding: const EdgeInsets.symmetric(horizontal: 20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.blueAccent.withOpacity(0.4),
+                      ),
+                      child: const Text(
+                        "Log in",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
                         ),
                       ),
                     ),
