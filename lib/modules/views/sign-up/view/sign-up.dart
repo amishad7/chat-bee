@@ -1,18 +1,18 @@
 import 'dart:developer';
-import 'package:firebase_project/modules/views/login/controller/Log-in-controller.dart';
-import 'package:firebase_project/modules/views/login/view/components/components.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../utils/globals/globals.dart';
 
-class LoginView extends StatelessWidget {
-  const LoginView({super.key});
+import '../../login/view/components/components.dart';
+
+class SignupView extends StatelessWidget {
+  const SignupView({super.key});
 
   @override
   Widget build(BuildContext context) {
     var seePassword = loginController.model.password;
-    final _loginFormFieldKey = GlobalKey<FormFieldState>();
+    final _signupFormFieldKey = GlobalKey<FormFieldState>();
 
     return Scaffold(
       body: Column(
@@ -33,7 +33,7 @@ class LoginView extends StatelessWidget {
                 ],
               ),
               child: Form(
-                key: _loginFormFieldKey,
+                key: _signupFormFieldKey,
                 child: Stack(
                   children: [
                     Transform.translate(
@@ -54,7 +54,7 @@ class LoginView extends StatelessWidget {
                         ),
                         alignment: Alignment.center,
                         child: Text(
-                          "LOGIN",
+                          "SIGN UP",
                           style: GoogleFonts.antic(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -162,7 +162,7 @@ class LoginView extends StatelessWidget {
                             color: Colors.blueAccent.withOpacity(0.4),
                           ),
                           child: const Text(
-                            "Log in",
+                            "Sign in",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,

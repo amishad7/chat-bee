@@ -1,5 +1,7 @@
+import 'package:get/get.dart';
+
 class LoginModel {
-  bool password = false;
+  RxBool password;
 
   LoginModel({required this.password});
 }

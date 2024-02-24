@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../utils/globals/globals.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -11,14 +12,20 @@ class HomeView extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Title"),
       ),
-      body: NavigationRail(
-        destinations: const [
-          NavigationRailDestination(
-            icon: Icon(Icons.add),
-            label: Text(""),
+      body: ListView.builder(
+        itemCount: user.length,
+        itemBuilder: (context, index) => Container(
+          child: Row(
+            children: [
+              CircleAvatar(
+                backgroundImage: NetworkImage(user[index]['url']),
+              ),
+              Text(
+                "${user[index]['name']}",
+              ),
+            ],
           ),
-        ],
-        selectedIndex: NavigationIndex,
+        ),
       ),
     );
   }

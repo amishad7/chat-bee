@@ -39,6 +39,7 @@ dependencies:
   firebase_core:
   get:
   google_fonts:
+  flutter_toastr:
 
 
 dev_dependencies:
