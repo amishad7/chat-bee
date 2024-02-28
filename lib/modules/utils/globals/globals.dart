@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 List user = [
   {
@@ -18,6 +19,11 @@ List user = [
     'name': 'aliezy',
   },
 ];
+TextStyle mainFont() => GoogleFonts.antic(
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+      fontSize: 20,
+    );
 
 // BoxDecoration simpleBox = BoxDecoration(
 //   borderRadius: BorderRadius.circular(20),

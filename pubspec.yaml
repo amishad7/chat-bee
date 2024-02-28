@@ -39,7 +39,10 @@ dependencies:
   firebase_core:
   get:
   google_fonts:
-  flutter_toastr:
+  fluttertoast:
+  font_awesome_flutter:
+  google_sign_in:
+  flutter_local_notifications:
 
 
 dev_dependencies:

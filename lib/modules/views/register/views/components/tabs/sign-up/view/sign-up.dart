@@ -1,18 +1,17 @@
 import 'dart:developer';
-import 'package:firebase_project/modules/views/login/controller/Log-in-controller.dart';
-import 'package:firebase_project/modules/views/login/view/components/components.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../../../utils/globals/globals.dart';
+import '../../../../../../../utils/globals/globals.dart';
+import '../../sign-in/view/components/components.dart';
 
-class LoginView extends StatelessWidget {
-  const LoginView({super.key});
+class SignupView extends StatelessWidget {
+  const SignupView({super.key});
 
   @override
   Widget build(BuildContext context) {
     var seePassword = loginController.model.password;
-    final _loginFormFieldKey = GlobalKey<FormFieldState>();
+    final _signupFormFieldKey = GlobalKey<FormFieldState>();
 
     return Scaffold(
       body: Column(
@@ -33,36 +32,9 @@ class LoginView extends StatelessWidget {
                 ],
               ),
               child: Form(
-                key: _loginFormFieldKey,
+                key: _signupFormFieldKey,
                 child: Stack(
                   children: [
-                    Transform.translate(
-                      offset: const Offset(100, 23),
-                      child: Container(
-                        height: Get.height / 13,
-                        width: Get.width / 2.8,
-                        decoration: BoxDecoration(
-                          color: Colors.blueAccent.withOpacity(0.7),
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.blueAccent.withOpacity(0.4),
-                              blurRadius: 10,
-                              // blurStyle: BlurStyle.inner,
-                            ),
-                          ],
-                        ),
-                        alignment: Alignment.center,
-                        child: Text(
-                          "LOGIN",
-                          style: GoogleFonts.antic(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                    ),
                     Transform.translate(
                       offset: const Offset(0, 123),
                       child: Container(
@@ -147,13 +119,13 @@ class LoginView extends StatelessWidget {
                       ),
                     ),
                     Transform.translate(
-                      offset: const Offset(110, 300),
+                      offset: const Offset(70, 310),
                       child: GestureDetector(
                         onTap: () {},
                         child: Container(
                           alignment: Alignment.center,
                           height: Get.height / 19,
-                          width: Get.width / 4,
+                          width: Get.width / 2,
 
                           // margin: const EdgeInsets.symmetric(horizontal: 20),
                           //padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -161,12 +133,9 @@ class LoginView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(30),
                             color: Colors.blueAccent.withOpacity(0.4),
                           ),
-                          child: const Text(
-                            "Log in",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
+                          child: Text(
+                            "Sign in",
+                            style: mainFont(),
                           ),
                         ),
                       ),
@@ -174,6 +143,28 @@ class LoginView extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+          ),
+          const SizedBox(height: 30),
+          FilledButton(
+            style: FilledButton.styleFrom(
+              backgroundColor: Colors.blue,
+              shape: const StadiumBorder(),
+              // padding: EdgeInsets.only(top: 40),
+              elevation: 25,
+              shadowColor: Colors.blueAccent.withOpacity(0.5),
+              fixedSize: const Size(270, 50),
+            ),
+            onPressed: () {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Google",
+                  style: mainFont(),
+                ),
+                const FaIcon(FontAwesomeIcons.google),
+              ],
             ),
           ),
         ],

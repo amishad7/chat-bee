@@ -1,6 +1,6 @@
-import 'package:firebase_project/modules/views/login/view/login.dart';
-import 'package:firebase_project/modules/views/sign-up/view/sign-up.dart';
+import 'package:firebase_project/modules/views/register/views/components/tabs/sign-in/view/sign-in.dart';
 import 'package:flutter/material.dart';
+import 'components/tabs/sign-up/view/sign-up.dart';
 
 /*
               Welcome Screen / Get Started
@@ -23,7 +23,7 @@ class Register extends StatelessWidget {
         body: TabBarView(
           children: [
             SignupView(),
-            LoginView(),
+            SignInView(),
           ],
         ),
       ),

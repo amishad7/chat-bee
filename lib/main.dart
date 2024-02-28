@@ -1,8 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_project/modules/views/home/view/home.dart';
-import 'package:firebase_project/modules/views/login/view/login.dart';
-import 'package:firebase_project/modules/views/register/view/register.dart';
-import 'package:firebase_project/modules/views/welocme/view/start.dart';
+import 'package:firebase_project/modules/views/intro/view/get-started.dart';
+import 'package:firebase_project/modules/views/intro/view/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'firebase_options.dart';
@@ -17,24 +15,33 @@ void main() async {
   runApp(
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/wc',
+      initialRoute: '/intro',
       getPages: [
         GetPage(
-          name: '/wc',
-          page: () => const StartView(),
+          name: '/intro',
+          page: () => const IntroView(),
         ),
         GetPage(
-          name: '/register',
-          page: () => const Register(),
+          name: '/get',
+          page: () => const GetStarted(),
         ),
-        GetPage(
-          name: '/home',
-          page: () => const HomeView(),
-        ),
-        GetPage(
-          name: '/login',
-          page: () => const LoginView(),
-        ),
+
+        // GetPage(
+        //   name: '/wc',
+        //   page: () => const StartView(),
+        // ),
+        // GetPage(
+        //   name: '/register',
+        //   page: () => const Register(),
+        // ),
+        // GetPage(
+        //   name: '/home',
+        //   page: () => const HomeView(),
+        // ),
+        // GetPage(
+        //   name: '/login',
+        //   page: () => const LoginView(),
+        // ),
       ],
     ),
   );

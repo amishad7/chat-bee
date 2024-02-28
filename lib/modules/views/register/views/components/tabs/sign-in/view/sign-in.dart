@@ -1,18 +1,16 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'components/components.dart';
 
-import '../../login/view/components/components.dart';
-
-class SignupView extends StatelessWidget {
-  const SignupView({super.key});
+class SignInView extends StatelessWidget {
+  const SignInView({super.key});
 
   @override
   Widget build(BuildContext context) {
     var seePassword = loginController.model.password;
-    final _signupFormFieldKey = GlobalKey<FormFieldState>();
+    final _loginFormFieldKey = GlobalKey<FormFieldState>();
 
     return Scaffold(
       body: Column(
@@ -33,11 +31,11 @@ class SignupView extends StatelessWidget {
                 ],
               ),
               child: Form(
-                key: _signupFormFieldKey,
+                key: _loginFormFieldKey,
                 child: Stack(
                   children: [
                     Transform.translate(
-                      offset: const Offset(100, 23),
+                      offset: const Offset(100, 22),
                       child: Container(
                         height: Get.height / 13,
                         width: Get.width / 2.8,
@@ -54,7 +52,7 @@ class SignupView extends StatelessWidget {
                         ),
                         alignment: Alignment.center,
                         child: Text(
-                          "SIGN UP",
+                          "LOGIN",
                           style: GoogleFonts.antic(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -162,7 +160,7 @@ class SignupView extends StatelessWidget {
                             color: Colors.blueAccent.withOpacity(0.4),
                           ),
                           child: const Text(
-                            "Sign in",
+                            "Log in",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
