@@ -1,6 +1,7 @@
 import 'package:firebase_project/modules/utils/globals/globals.dart';
 import 'package:firebase_project/modules/views/intro/view/components/components.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class GetStarted extends StatelessWidget {
@@ -78,19 +79,23 @@ class GetStarted extends StatelessWidget {
                         FilledButton(
                           style: FilledButton.styleFrom(
                             backgroundColor: Colors.black,
-                            fixedSize: Size(140, 50),
+                            fixedSize: const Size(140, 50),
                             elevation: 20,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.toNamed('/sign-in');
+                          },
                           child: const Text('Sign in'),
                         ),
                         FilledButton(
                           style: FilledButton.styleFrom(
                             backgroundColor: Colors.white,
                             elevation: 20,
-                            fixedSize: Size(140, 50),
+                            fixedSize: const Size(140, 50),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.toNamed('/sign-up');
+                          },
                           child: const Text(
                             'Sign up',
                             style: TextStyle(color: Colors.black),

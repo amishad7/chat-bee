@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+bool visited = false;
+
 List user = [
   {
     'name': 'priya',
@@ -19,10 +21,24 @@ List user = [
     'name': 'aliezy',
   },
 ];
-TextStyle mainFont() => GoogleFonts.antic(
-      color: Colors.white,
-      fontWeight: FontWeight.bold,
-      fontSize: 20,
+TextStyle mainFont(
+        {Color color = Colors.white,
+        FontWeight weight = FontWeight.bold,
+        double size = 20}) =>
+    GoogleFonts.antic(
+      color: color,
+      fontWeight: weight,
+      fontSize: size,
+    );
+
+TextStyle subFont(
+        {Color color = Colors.white,
+        FontWeight weight = FontWeight.bold,
+        double size = 20}) =>
+    GoogleFonts.nunito(
+      color: color,
+      fontWeight: weight,
+      fontSize: size,
     );
 
 // BoxDecoration simpleBox = BoxDecoration(

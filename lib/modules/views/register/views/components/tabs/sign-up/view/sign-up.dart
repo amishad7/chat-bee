@@ -48,7 +48,7 @@ class SignupView extends StatelessWidget {
                           //    validator: userNameValidator(context),
                           controller: username,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                          style: loginTextStyle,
+                          style: loginTextStyle(),
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
                               borderSide: BorderSide.none,
@@ -79,7 +79,7 @@ class SignupView extends StatelessWidget {
                         ),
                         child: Obx(
                           () => TextFormField(
-                            style: loginTextStyle,
+                            style: loginTextStyle(),
                             controller: password,
 
                             autovalidateMode:
@@ -146,27 +146,6 @@ class SignupView extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 30),
-          FilledButton(
-            style: FilledButton.styleFrom(
-              backgroundColor: Colors.blue,
-              shape: const StadiumBorder(),
-              // padding: EdgeInsets.only(top: 40),
-              elevation: 25,
-              shadowColor: Colors.blueAccent.withOpacity(0.5),
-              fixedSize: const Size(270, 50),
-            ),
-            onPressed: () {},
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Google",
-                  style: mainFont(),
-                ),
-                const FaIcon(FontAwesomeIcons.google),
-              ],
-            ),
-          ),
         ],
       ),
     );

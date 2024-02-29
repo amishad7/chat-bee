@@ -11,9 +11,9 @@ class IntroView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Timer(
-      const Duration(seconds: 3),
+      const Duration(seconds: 1),
       () {
-        Get.toNamed('/get');
+        Get.offAllNamed('/get');
       },
     );
 
