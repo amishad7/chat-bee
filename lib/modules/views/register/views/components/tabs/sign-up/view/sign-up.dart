@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:firebase_project/modules/views/intro/view/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -11,142 +12,166 @@ class SignupView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var seePassword = loginController.model.password;
-    final _signupFormFieldKey = GlobalKey<FormFieldState>();
+    final signupFormFieldKey = GlobalKey<FormFieldState>();
 
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: Container(
-              width: Get.width / 1.2,
-              height: Get.height / 2,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.3),
-                    blurRadius: 20,
+      backgroundColor: widgetColor,
+      body: SafeArea(
+        child: Stack(
+          // mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0, right: 20, left: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Get.back();
+                      log("Back");
+                    },
+                    icon: const Icon(Icons.arrow_back_ios),
                   ),
                 ],
               ),
-              child: Form(
-                key: _signupFormFieldKey,
-                child: Stack(
-                  children: [
-                    Transform.translate(
-                      offset: const Offset(0, 123),
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: Colors.blueAccent.withOpacity(0.4),
-                        ),
-                        child: TextFormField(
-                          //    validator: userNameValidator(context),
-                          controller: usernameEditor,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          style: loginTextStyle(),
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                            ),
-                            alignLabelWithHint: true,
-                            hintText: "user name",
-                            suffixIcon: Icon(
-                              Icons.person_add,
-                              color: Colors.white,
-                            ),
-                            hintFadeDuration: Duration(milliseconds: 1000),
-                            hintStyle: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Transform.translate(
-                      offset: const Offset(0, 200),
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: Colors.blueAccent.withOpacity(0.4),
-                        ),
-                        child: Obx(
-                          () => TextFormField(
-                            style: loginTextStyle(),
-                            controller: passwordEditor,
-
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            //   validator: userNameValidator(context),
-                            obscureText: seePassword.value,
-                            decoration: InputDecoration(
-                              border: const OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                              alignLabelWithHint: true,
-                              hintText: "password",
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  loginController.hidePassword();
-                                  log('${seePassword.value}');
-                                },
-                                icon: (seePassword.value)
-                                    ? const Icon(
-                                        Icons.lock_outline,
-                                        color: Colors.white,
-                                      )
-                                    : const Icon(
-                                        Icons.lock_open_rounded,
-                                        color: Colors.white,
-                                      ),
-                              ),
-                              hintFadeDuration:
-                                  const Duration(milliseconds: 1000),
-                              hintStyle: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Transform.translate(
-                      offset: const Offset(70, 310),
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: Get.height / 19,
-                          width: Get.width / 2,
-
-                          // margin: const EdgeInsets.symmetric(horizontal: 20),
-                          //padding: const EdgeInsets.symmetric(horizontal: 20),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: Colors.blueAccent.withOpacity(0.4),
-                          ),
-                          child: Text(
-                            "Sign in",
-                            style: mainFont(),
-                          ),
-                        ),
-                      ),
-                    ),
+            ),
+            Transform.translate(
+              offset: const Offset(145, 60),
+              child: Text(
+                "Sign Up",
+                style: subFont(
+                  color: Colors.black,
+                  size: 40,
+                  weight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Transform.translate(
+              offset: const Offset(0, 120),
+              child: Container(
+                height: Get.height / 1.25,
+                width: Get.width,
+                margin: const EdgeInsets.only(top: 67),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40),
+                  ),
+                  color: Colors.white,
+                  boxShadow: [
+                    // BoxShadow(
+                    //   color: Colors.grey.withOpacity(0.3),
+                    //   blurRadius: 20,
+                    // ),
                   ],
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 30),
-        ],
+            Form(
+              key: signupFormFieldKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Transform.translate(
+                    offset: const Offset(0, 260),
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: const Color(0xffeeeeee),
+                        // color: const Color(0xffeeeeee),
+                      ),
+                      child:
+                          userTextField(textEditingController: usernameEditor),
+                    ),
+                  ),
+                  Transform.translate(
+                    offset: const Offset(0, 280),
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: const Color(0xffeeeeee),
+                      ),
+                      child: Obx(
+                        () => passwordTextField(
+                          textEditingController: passwordEditor,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Transform.translate(
+              offset: const Offset(45, 500),
+              child: Column(
+                //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FilledButton(
+                    style: FilledButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      fixedSize: const Size(325, 50),
+                      elevation: 20,
+                    ),
+                    onPressed: onRegister,
+                    child: Text(
+                      "SIGN UP",
+                      style: subFont(size: 15, weight: FontWeight.normal),
+                    ),
+                  ),
+                  const SizedBox(height: 34),
+                  FilledButton(
+                    style: FilledButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      //  shape: const StadiumBorder(),
+                      // padding: EdgeInsets.only(top: 40),
+                      elevation: 5,
+                      //  shadowColor: Colors.blueAccent.withOpacity(0.5),
+                      fixedSize: const Size(330, 60),
+                    ),
+                    onPressed: signInAnonymous,
+                    child: Text(
+                      "Sign In Anonymous",
+                      style: mainFont(size: 15, color: Colors.black),
+                    ),
+                  ),
+                  const SizedBox(height: 34),
+                  FilledButton(
+                    style: FilledButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      //  shape: const StadiumBorder(),
+                      // padding: EdgeInsets.only(top: 40),
+                      elevation: 5,
+                      //  shadowColor: Colors.blueAccent.withOpacity(0.5),
+                      fixedSize: const Size(330, 60),
+                    ),
+                    onPressed: onGoogleSignIn,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const FaIcon(
+                          FontAwesomeIcons.google,
+                          color: Colors.black,
+                        ),
+                        Text(
+                          "Continue with Google",
+                          style: mainFont(size: 15, color: Colors.black),
+                        ),
+                        const Icon(
+                          Icons.arrow_circle_right_rounded,
+                          color: Colors.black,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

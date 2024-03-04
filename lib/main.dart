@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_project/modules/views/home/view/home.dart';
 import 'package:firebase_project/modules/views/intro/view/get-started.dart';
 import 'package:firebase_project/modules/views/intro/view/splash.dart';
 import 'package:firebase_project/modules/views/register/views/components/tabs/sign-in/view/sign-in.dart';
@@ -28,7 +29,6 @@ void main() async {
           name: '/get',
           page: () => const GetStarted(),
         ),
-
         GetPage(
           name: '/sign-in',
           page: () => const SignInView(),
@@ -37,10 +37,10 @@ void main() async {
           name: '/sign-up',
           page: () => const SignupView(),
         ),
-        // GetPage(
-        //   name: '/login',
-        //   page: () => const LoginView(),
-        // ),
+        GetPage(
+          name: '/home',
+          page: () => const HomeView(),
+        ),
       ],
     ),
   );

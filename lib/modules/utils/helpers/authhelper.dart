@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
 import '../../views/register/views/components/tabs/sign-up/model/signInModel.dart';
 
 class RegisterHelper {
@@ -34,28 +33,40 @@ class RegisterHelper {
     return res;
   }
 
-  registerWithGoogle() async {
+  Future<Map<String, dynamic>> signIn(
+      {required LoginCredentials credentials}) async {
     Map<String, dynamic> res = {};
-
     try {
-      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
-
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
-
       UserCredential userCredential =
-          await firebaseAuth.signInWithCredential(credential);
-
+          await firebaseAuth.signInWithEmailAndPassword(
+              email: credentials.email, password: credentials.password);
       res['user'] = userCredential.user;
     } on FirebaseAuthException catch (e) {
       res['error'] = e.code;
     }
+    return res;
+  }
 
+  registerWithGoogle() async {
+    Map<String, dynamic> res = {};
+    try {
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      UserCredential userCredential =
+          await firebaseAuth.signInWithCredential(credential);
+      res['user'] = userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      res['error'] = e.code;
+    }
     return res;
   }
 
@@ -63,13 +74,4 @@ class RegisterHelper {
     await firebaseAuth.signOut();
     await googleSignIn.signOut();
   }
-
-  // Future<bool> signOutFromGoogle() async {
-  //   try {
-  //     await FirebaseAuth.instance.signOut();
-  //     return true;
-  //   } on Exception catch (_) {
-  //     return false;
-  //   }
-  // }
 }
