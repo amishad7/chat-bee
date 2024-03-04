@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../views/register/views/components/tabs/sign-up/model/signInModel.dart';
+
 class RegisterHelper {
   RegisterHelper._();
   static final RegisterHelper registerHelper = RegisterHelper._();
@@ -18,18 +20,19 @@ class RegisterHelper {
     return res;
   }
 
-  // Future<Map<String, dynamic>> signIn(
-  //     {required LoginCredentials credentials}) async {
-  //   Map<String, dynamic> res = {};
-  //   try {
-  //     UserCredential userCredential = await firebaseAuth.signInWithEmailAndPassword(
-  //         email: credentials.email, password: credentials.password);
-  //     res['user'] = userCredential.user;
-  //   } on FirebaseAuthException catch (e) {
-  //     res['error'] = e.code;
-  //   }
-  //   return res;
-  // }
+  Future<Map<String, dynamic>> signUp(
+      {required LoginCredentials credentials}) async {
+    Map<String, dynamic> res = {};
+    try {
+      UserCredential userCredential =
+          await firebaseAuth.createUserWithEmailAndPassword(
+              email: credentials.email, password: credentials.password);
+      res['user'] = userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      res['error'] = e.code;
+    }
+    return res;
+  }
 
   registerWithGoogle() async {
     Map<String, dynamic> res = {};

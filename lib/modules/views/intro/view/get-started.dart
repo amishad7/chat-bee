@@ -16,14 +16,28 @@ class GetStarted extends StatelessWidget {
             flex: 3,
             child: Container(
               color: Colors.white,
-              child: Center(
-                child: CircleAvatar(
-                  radius: 100,
-                  backgroundColor: widgetColor,
-                  child: const Text(
-                    "LOGO + ICON",
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    child: CircleAvatar(
+                      radius: circleSize! - 19,
+                      backgroundImage: const NetworkImage(
+                          "https://i.pinimg.com/564x/d5/d8/cb/d5d8cbbd1a86f021d7bdd6b5d28861f3.jpg"),
+                    ),
                   ),
-                ),
+                  Transform.translate(
+                    offset: const Offset(-10, 20),
+                    child: Text(
+                      "Chat Bee",
+                      style: mainFont(
+                        color: Colors.black,
+                        size: 34,
+                        weight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

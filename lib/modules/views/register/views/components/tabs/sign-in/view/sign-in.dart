@@ -11,7 +11,6 @@ class SignInView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var seePassword = loginController.model.password;
     final _loginFormFieldKey = GlobalKey<FormFieldState>();
 
     return Scaffold(
@@ -27,15 +26,45 @@ class SignInView extends StatelessWidget {
                 BackButton(
                   color: Colors.black.withOpacity(0.8),
                 ),
-                Text(
-                  "Register",
-                  style: mainFont(color: Colors.black),
+                TextButton(
+                  onPressed: () {
+                    // Get.toNamed('/sign-up');
+                    signup() {
+                      Get.defaultDialog(
+                        backgroundColor: Colors.white,
+                        title: "Chatters Hub",
+                        titleStyle: subFont(size: 22),
+                        content: Column(
+                          children: [
+                            userTextField(
+                                textEditingController: usernameEditor),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            passwordTextField(
+                                textEditingController: passwordEditor),
+                          ],
+                        ),
+                        confirm: ElevatedButton(
+                          onPressed: onRegister,
+                          child: Text(
+                            "Register",
+                            style: subFont(),
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                  child: Text(
+                    "Register",
+                    style: mainFont(color: Colors.black),
+                  ),
                 ),
               ],
             ),
           ),
           Transform.translate(
-            offset: Offset(145, 60),
+            offset: const Offset(145, 60),
             child: Text(
               "Sign In",
               style: subFont(
@@ -46,7 +75,7 @@ class SignInView extends StatelessWidget {
             ),
           ),
           Transform.translate(
-            offset: Offset(0, 120),
+            offset: const Offset(0, 120),
             child: Container(
               height: Get.height / 1.25,
               width: Get.width,
@@ -71,6 +100,7 @@ class SignInView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                // TODO: USERNAME TEXT FORM FILED
                 Transform.translate(
                   offset: const Offset(0, 260),
 
@@ -84,51 +114,10 @@ class SignInView extends StatelessWidget {
                       color: const Color(0xffeeeeee),
                       // color: const Color(0xffeeeeee),
                     ),
-                    child: TextFormField(
-                      //    validator: userNameValidator(context),
-                      controller: username,
-                      cursorColor: const Color(0xffc9c9c9),
-
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      style: loginTextStyle(
-                          color: Colors.black, weight: FontWeight.normal),
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                        ),
-                        alignLabelWithHint: true,
-                        hintText: "user name",
-                        hintFadeDuration: Duration(milliseconds: 1000),
-                        hintStyle: TextStyle(
-                          color: Color(0xffc9c9c9),
-                          fontSize: 19,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
+                    child: userTextField(textEditingController: usernameEditor),
                   ),
                 ),
-                // FilledButton(
-                //   style: FilledButton.styleFrom(
-                //     backgroundColor: Colors.blue,
-                //     shape: const StadiumBorder(),
-                //     // padding: EdgeInsets.only(top: 40),
-                //     elevation: 25,
-                //     shadowColor: Colors.blueAccent.withOpacity(0.5),
-                //     fixedSize: const Size(270, 50),
-                //   ),
-                //   onPressed: () {},
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //     children: [
-                //       Text(
-                //         "Google",
-                //         style: mainFont(),
-                //       ),
-                //       const FaIcon(FontAwesomeIcons.google),
-                //     ],
-                //   ),
-                // ),
+                // TODO: PASSWORD TEXT FORM FILED
                 Transform.translate(
                   offset: const Offset(0, 280),
                   child: Container(
@@ -139,49 +128,15 @@ class SignInView extends StatelessWidget {
                       color: const Color(0xffeeeeee),
                     ),
                     child: Obx(
-                      () => TextFormField(
-                        style: loginTextStyle(),
-
-                        controller: password,
-                        cursorColor: const Color(0xffc9c9c9),
-
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        //   validator: userNameValidator(context),
-                        obscureText: seePassword.value,
-                        decoration: InputDecoration(
-                          border: const OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                          ),
-                          alignLabelWithHint: true,
-                          hintText: "password",
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              loginController.hidePassword();
-                              log('${seePassword.value}');
-                            },
-                            icon: (seePassword.value)
-                                ? const Icon(
-                                    Icons.lock_outline,
-                                    color: Color(0xffc9c9c9),
-                                  )
-                                : const Icon(
-                                    Icons.lock_open_rounded,
-                                    color: Color(0xffc9c9c9),
-                                  ),
-                          ),
-                          hintFadeDuration: const Duration(milliseconds: 1000),
-                          hintStyle: const TextStyle(
-                            color: Color(0xffc9c9c9),
-                            fontSize: 16,
-                          ),
-                        ),
+                      () => passwordTextField(
+                        textEditingController: passwordEditor,
                       ),
                     ),
                   ),
                 ),
-
+                // TODO: FORGET PASSWORD BUTTON
                 Transform.translate(
-                  offset: Offset(70, 270),
+                  offset: const Offset(70, 270),
                   child: TextButton(
                     style: ButtonStyle(
                       overlayColor:
@@ -199,30 +154,59 @@ class SignInView extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Transform.translate(
-                //   offset: Offset(45, 0),
-                //   child: FilledButton(
-                //     style: FilledButton.styleFrom(
-                //       backgroundColor: Colors.black,
-                //       //  shape: const StadiumBorder(),
-                //       // padding: EdgeInsets.only(top: 40),
-                //       elevation: 25,
-                //       //  shadowColor: Colors.blueAccent.withOpacity(0.5),
-                //       fixedSize: const Size(270, 50),
-                //     ),
-                //     onPressed: () {},
-                //     child: Row(
-                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //       children: [
-                //         Text(
-                //           "Google",
-                //           style: mainFont(),
-                //         ),
-                //         const FaIcon(FontAwesomeIcons.google),
-                //       ],
-                //     ),
-                //   ),
-                // ),
+              ],
+            ),
+          ),
+          Transform.translate(
+            offset: const Offset(45, 500),
+            child: Column(
+              //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                FilledButton(
+                  style: FilledButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    fixedSize: const Size(325, 50),
+                    elevation: 20,
+                  ),
+                  onPressed: () {
+                    Get.snackbar('sign in ', 'done');
+                  },
+                  child: Text(
+                    "SIGN IN",
+                    style: subFont(size: 15, weight: FontWeight.normal),
+                  ),
+                ),
+                SizedBox(height: 34),
+                FilledButton(
+                  style: FilledButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    //  shape: const StadiumBorder(),
+                    // padding: EdgeInsets.only(top: 40),
+                    elevation: 5,
+                    //  shadowColor: Colors.blueAccent.withOpacity(0.5),
+                    fixedSize: const Size(330, 60),
+                  ),
+                  onPressed: () {
+                    Get.snackbar('to google sign in ', 'done');
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const FaIcon(
+                        FontAwesomeIcons.google,
+                        color: Colors.black,
+                      ),
+                      Text(
+                        "Continue with Google",
+                        style: mainFont(size: 15, color: Colors.black),
+                      ),
+                      const Icon(
+                        Icons.arrow_circle_right_rounded,
+                        color: Colors.black,
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

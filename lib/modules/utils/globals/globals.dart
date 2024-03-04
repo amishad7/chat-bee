@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 bool visited = false;
+String? password;
+String? mail;
 
 List user = [
   {

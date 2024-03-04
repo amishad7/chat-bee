@@ -46,7 +46,7 @@ class SignupView extends StatelessWidget {
                         ),
                         child: TextFormField(
                           //    validator: userNameValidator(context),
-                          controller: username,
+                          controller: usernameEditor,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           style: loginTextStyle(),
                           decoration: const InputDecoration(
@@ -80,7 +80,7 @@ class SignupView extends StatelessWidget {
                         child: Obx(
                           () => TextFormField(
                             style: loginTextStyle(),
-                            controller: password,
+                            controller: passwordEditor,
 
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,

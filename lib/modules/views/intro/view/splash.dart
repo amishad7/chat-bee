@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_project/modules/utils/globals/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,7 +12,7 @@ class IntroView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Timer(
-      const Duration(seconds: 1),
+      const Duration(seconds: 2),
       () {
         Get.offAllNamed('/get');
       },
@@ -21,7 +22,7 @@ class IntroView extends StatelessWidget {
       body: Stack(
         children: [
           Transform.translate(
-            offset: const Offset(270, -30),
+            offset: const Offset(270, -100),
             child: CircleAvatar(
               backgroundColor: widgetColor,
               radius: circleSize! + 30,
@@ -29,14 +30,20 @@ class IntroView extends StatelessWidget {
           ),
           Center(
             child: CircleAvatar(
-              radius: circleSize,
-              child: const Text(
-                "LOGO + ICON",
-              ),
+              radius: circleSize! - 39,
+              backgroundImage: const NetworkImage(
+                  "https://i.pinimg.com/564x/d5/d8/cb/d5d8cbbd1a86f021d7bdd6b5d28861f3.jpg"),
             ),
           ),
           Transform.translate(
-            offset: const Offset(-120, 480),
+            offset: const Offset(160, 520),
+            child: Text(
+              "Chat bee",
+              style: mainFont(color: Colors.black),
+            ),
+          ),
+          Transform.translate(
+            offset: const Offset(-180, 540),
             child: CircleAvatar(
               backgroundColor: widgetColor,
               radius: circleSize! + 200,
