@@ -101,7 +101,7 @@ userTextField({required TextEditingController textEditingController}) =>
       ),
       onChanged: (val) {
         mail = val;
-        Get.snackbar('value', "$mail");
+        Get.snackbar('value of mail', "$mail");
       },
     );
 
@@ -111,6 +111,10 @@ onRegister() async {
   Map<String, dynamic> res =
       await RegisterHelper.registerHelper.signUp(credentials: credentials);
   if (res['error'] != null) {
+    log("==================================================");
+    log("${res['error']}");
+    log("==================================================");
+
     Fluttertoast.showToast(msg: "Sign up failed", textColor: Colors.red);
   } else {
     usernameEditor.clear();

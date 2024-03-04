@@ -11,7 +11,7 @@ class SignInView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _loginFormFieldKey = GlobalKey<FormFieldState>();
+    final loginFormFieldKey = GlobalKey<FormFieldState>();
 
     return Scaffold(
       backgroundColor: widgetColor,
@@ -27,34 +27,7 @@ class SignInView extends StatelessWidget {
                   color: Colors.black.withOpacity(0.8),
                 ),
                 TextButton(
-                  onPressed: () {
-                    // Get.toNamed('/sign-up');
-                    signup() {
-                      Get.defaultDialog(
-                        backgroundColor: Colors.white,
-                        title: "Chatters Hub",
-                        titleStyle: subFont(size: 22),
-                        content: Column(
-                          children: [
-                            userTextField(
-                                textEditingController: usernameEditor),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            passwordTextField(
-                                textEditingController: passwordEditor),
-                          ],
-                        ),
-                        confirm: ElevatedButton(
-                          onPressed: onRegister,
-                          child: Text(
-                            "Register",
-                            style: subFont(),
-                          ),
-                        ),
-                      );
-                    }
-                  },
+                  onPressed: register,
                   child: Text(
                     "Register",
                     style: mainFont(color: Colors.black),
@@ -96,7 +69,7 @@ class SignInView extends StatelessWidget {
             ),
           ),
           Form(
-            key: _loginFormFieldKey,
+            key: loginFormFieldKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -211,6 +184,30 @@ class SignInView extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  register() {
+    Get.defaultDialog(
+      backgroundColor: Colors.white,
+      title: "Chatters Hub",
+      titleStyle: subFont(size: 22),
+      content: Column(
+        children: [
+          userTextField(textEditingController: usernameEditor),
+          const SizedBox(
+            height: 20,
+          ),
+          passwordTextField(textEditingController: passwordEditor),
+        ],
+      ),
+      confirm: ElevatedButton(
+        onPressed: onRegister,
+        child: Text(
+          "Register",
+          style: subFont(),
+        ),
       ),
     );
   }
