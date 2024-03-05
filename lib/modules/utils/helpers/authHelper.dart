@@ -1,19 +1,21 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
 import '../../views/register/views/components/tabs/sign-up/model/signInModel.dart';
 
-class RegisterHelper {
-  RegisterHelper._();
-  static final RegisterHelper registerHelper = RegisterHelper._();
-  static final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  static final GoogleSignIn googleSignIn = GoogleSignIn();
+class AuthHelper {
+  AuthHelper._();
 
+  //todo:var
+  static final AuthHelper authHelper = AuthHelper._();
+  static FirebaseAuth auth = FirebaseAuth.instance;
+  static GoogleSignIn googleSignIn = GoogleSignIn();
+
+  //todo: Anonymous login
   Future<Map<String, dynamic>> signInAnonymous() async {
     Map<String, dynamic> res = {};
     try {
-      UserCredential userCredential = await firebaseAuth.signInAnonymously();
+      UserCredential userCredential = await auth.signInAnonymously();
       res['user'] = userCredential.user;
     } on FirebaseAuthException catch (e) {
       res['error'] = e.code;
@@ -21,28 +23,13 @@ class RegisterHelper {
     return res;
   }
 
+  //todo: SignUP With Email Pass
   Future<Map<String, dynamic>> signUp(
-      {required SignInCredentials credentials}) async {
+      {required SignInCredentials signUpModel}) async {
     Map<String, dynamic> res = {};
     try {
-      UserCredential userCredential =
-          await firebaseAuth.createUserWithEmailAndPassword(
-              email: credentials.email, password: credentials.password);
-      res['user'] = userCredential.user;
-    } on FirebaseAuthException catch (e) {
-      res['error'] = e.code;
-      log("${res['error']}");
-    }
-    return res;
-  }
-
-  Future<Map<String, dynamic>> signIn(
-      {required SignInCredentials credentials}) async {
-    Map<String, dynamic> res = {};
-    try {
-      UserCredential userCredential =
-          await firebaseAuth.signInWithEmailAndPassword(
-              email: credentials.email, password: credentials.password);
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+          email: signUpModel.email, password: signUpModel.password);
       res['user'] = userCredential.user;
     } on FirebaseAuthException catch (e) {
       res['error'] = e.code;
@@ -50,22 +37,39 @@ class RegisterHelper {
     return res;
   }
 
-  registerWithGoogle() async {
+  //todo:login with email password
+  Future<Map<String, dynamic>> login(
+      {required SignInCredentials signUpModel}) async {
     Map<String, dynamic> res = {};
     try {
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+        email: signUpModel.email,
+        password: signUpModel.password,
+      );
+      res['user'] = userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      res['error'] = e.code;
+    }
+    return res;
+  }
+
+  //todo: login with googleId
+  Future<Map<String, dynamic>> signInWithGoogle() async {
+    Map<String, dynamic> res = {};
+    try {
+      //
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-
-      // Obtain the auth details from the request
+      //
       final GoogleSignInAuthentication? googleAuth =
           await googleUser?.authentication;
-
-      // Create a new credential
-      final credential = GoogleAuthProvider.credential(
+      //
+      final cradential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
+      //
       UserCredential userCredential =
-          await firebaseAuth.signInWithCredential(credential);
+          await auth.signInWithCredential(cradential);
       res['user'] = userCredential.user;
     } on FirebaseAuthException catch (e) {
       res['error'] = e.code;
@@ -73,8 +77,9 @@ class RegisterHelper {
     return res;
   }
 
+  //todo: Sign Out
   Future<void> signOut() async {
-    await firebaseAuth.signOut();
+    await auth.signOut();
     await googleSignIn.signOut();
   }
 }

@@ -40,6 +40,7 @@ dependencies:
   get:
   google_fonts:
   fluttertoast:
+  shimmer:
   font_awesome_flutter:
   google_sign_in:
   cloud_firestore:

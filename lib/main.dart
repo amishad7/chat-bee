@@ -7,7 +7,6 @@ import 'package:firebase_project/modules/views/register/views/components/tabs/si
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'firebase_options.dart';
-import 'modules/views/register/views/register.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

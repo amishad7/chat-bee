@@ -1,28 +1,102 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:developer';
+import 'package:get/get.dart';
+import '../../views/register/views/components/tabs/sign-in/controller/Sign-in-controller.dart';
 
 bool visited = false;
 String? password;
 String? mail;
 
-List user = [
-  {
-    'name': 'priya',
-    'url':
-        'https://i.pinimg.com/564x/d0/df/a5/d0dfa5770ed584c6010025ca398f70ae.jpg',
-  },
-  {
-    'url':
-        'https://i.pinimg.com/564x/9e/f4/7e/9ef47e652eacd5c324acb010f3391599.jpg',
-    'name': 'moonie',
-  },
-  {
-    'url':
-        'https://i.pinimg.com/736x/90/3f/ac/903fac67043136dd3aa1203a21a2edc7.jpg',
-    'name': 'aliezy',
-  },
-];
+SignInController loginController = Get.put(SignInController());
+
+TextStyle loginTextStyle(
+        {Color color = Colors.white,
+        FontWeight weight = FontWeight.bold,
+        double size = 20}) =>
+    TextStyle(
+      color: color,
+      fontWeight: weight,
+      fontSize: size,
+    );
+
+TextEditingController usernameEditor = TextEditingController();
+
+TextEditingController passwordEditor = TextEditingController();
+
+var seePassword = loginController.model.password;
+
+passwordTextField({required TextEditingController textEditingController}) =>
+    TextFormField(
+      style: loginTextStyle(color: Colors.black, weight: FontWeight.normal),
+
+      controller: passwordEditor,
+      scrollPhysics: const BouncingScrollPhysics(),
+      autocorrect: false,
+      mouseCursor: MouseCursor.defer,
+
+      cursorColor: const Color(0xffc9c9c9),
+
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      //   validator: userNameValidator(context),
+      obscureText: seePassword.value,
+      decoration: InputDecoration(
+        border: const OutlineInputBorder(
+          borderSide: BorderSide.none,
+        ),
+        alignLabelWithHint: true,
+        hintText: "password",
+        suffixIcon: IconButton(
+          onPressed: () {
+            loginController.hidePassword();
+            log('${seePassword.value}');
+          },
+          icon: (seePassword.value)
+              ? const Icon(
+                  Icons.lock_outline,
+                  color: Color(0xffc9c9c9),
+                )
+              : const Icon(
+                  Icons.lock_open_rounded,
+                  color: Color(0xffc9c9c9),
+                ),
+        ),
+        hintFadeDuration: const Duration(milliseconds: 1000),
+        hintStyle: const TextStyle(
+          color: Color(0xffc9c9c9),
+          fontSize: 16,
+        ),
+      ),
+
+      onChanged: (val) {
+        password = val;
+      },
+    );
+
+userTextField({required TextEditingController textEditingController}) =>
+    TextFormField(
+      controller: usernameEditor,
+      cursorColor: const Color(0xffc9c9c9),
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      style: loginTextStyle(color: Colors.black, weight: FontWeight.normal),
+      decoration: const InputDecoration(
+        border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+        ),
+        alignLabelWithHint: true,
+        hintText: "email",
+        hintFadeDuration: Duration(milliseconds: 1000),
+        hintStyle: TextStyle(
+          color: Color(0xffc9c9c9),
+          fontSize: 19,
+          fontWeight: FontWeight.normal,
+        ),
+      ),
+      onChanged: (val) {
+        mail = val;
+      },
+    );
+
 TextStyle mainFont(
         {Color color = Colors.white,
         FontWeight weight = FontWeight.bold,
@@ -42,15 +116,3 @@ TextStyle subFont(
       fontWeight: weight,
       fontSize: size,
     );
-
-// BoxDecoration simpleBox = BoxDecoration(
-//   borderRadius: BorderRadius.circular(20),
-//   color: Colors.white,
-//   boxShadow: [
-//     BoxShadow(
-//       blurRadius: 40,
-//       offset: const Offset(16, 0),
-//       color: const Color(0xff9aaacf).withAlpha(20),
-//     ),
-//   ],
-// );

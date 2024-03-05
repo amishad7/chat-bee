@@ -116,7 +116,9 @@ class SignupView extends StatelessWidget {
                       fixedSize: const Size(325, 50),
                       elevation: 20,
                     ),
-                    onPressed: onRegister,
+                    onPressed: signUp(
+                        password: passwordEditor.text,
+                        email: usernameEditor.text),
                     child: Text(
                       "SIGN UP",
                       style: subFont(size: 15, weight: FontWeight.normal),
@@ -132,7 +134,7 @@ class SignupView extends StatelessWidget {
                       //  shadowColor: Colors.blueAccent.withOpacity(0.5),
                       fixedSize: const Size(330, 60),
                     ),
-                    onPressed: signInAnonymous,
+                    onPressed: anonymous,
                     child: Text(
                       "Sign In Anonymous",
                       style: mainFont(size: 15, color: Colors.black),
@@ -148,7 +150,7 @@ class SignupView extends StatelessWidget {
                       //  shadowColor: Colors.blueAccent.withOpacity(0.5),
                       fixedSize: const Size(330, 60),
                     ),
-                    onPressed: onGoogleSignIn,
+                    onPressed: google,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

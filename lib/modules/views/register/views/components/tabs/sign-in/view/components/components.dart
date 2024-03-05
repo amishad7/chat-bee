@@ -1,156 +1,77 @@
 import 'dart:developer';
-import 'package:firebase_project/modules/utils/helpers/authhelper.dart';
-import 'package:flutter/material.dart';
+import 'package:firebase_project/modules/views/register/views/components/tabs/sign-up/model/signInModel.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import '../../../../../../../../utils/globals/globals.dart';
-import '../../../../../../../../utils/helpers/cloudhelper.dart';
-import '../../../sign-up/model/signInModel.dart';
-import '../../controller/Sign-in-controller.dart';
+import '../../../../../../../../utils/helpers/authHelper.dart';
+import '../../../../../../../../utils/helpers/cloudHelper.dart';
 
-SignInController loginController = Get.put(SignInController());
-
-TextStyle loginTextStyle(
-        {Color color = Colors.white,
-        FontWeight weight = FontWeight.bold,
-        double size = 20}) =>
-    TextStyle(
-      color: color,
-      fontWeight: weight,
-      fontSize: size,
-    );
-
-TextEditingController usernameEditor = TextEditingController();
-
-TextEditingController passwordEditor = TextEditingController();
-
-var seePassword = loginController.model.password;
-
-passwordTextField({required TextEditingController textEditingController}) =>
-    TextFormField(
-      style: loginTextStyle(color: Colors.black, weight: FontWeight.normal),
-
-      controller: passwordEditor,
-      scrollPhysics: const BouncingScrollPhysics(),
-      autocorrect: false,
-      mouseCursor: MouseCursor.defer,
-
-      cursorColor: const Color(0xffc9c9c9),
-
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      //   validator: userNameValidator(context),
-      obscureText: seePassword.value,
-      decoration: InputDecoration(
-        border: const OutlineInputBorder(
-          borderSide: BorderSide.none,
-        ),
-        alignLabelWithHint: true,
-        hintText: "password",
-        suffixIcon: IconButton(
-          onPressed: () {
-            loginController.hidePassword();
-            log('${seePassword.value}');
-          },
-          icon: (seePassword.value)
-              ? const Icon(
-                  Icons.lock_outline,
-                  color: Color(0xffc9c9c9),
-                )
-              : const Icon(
-                  Icons.lock_open_rounded,
-                  color: Color(0xffc9c9c9),
-                ),
-        ),
-        hintFadeDuration: const Duration(milliseconds: 1000),
-        hintStyle: const TextStyle(
-          color: Color(0xffc9c9c9),
-          fontSize: 16,
-        ),
-      ),
-
-      onChanged: (val) {
-        password = val;
-      },
-    );
-
-userTextField({required TextEditingController textEditingController}) =>
-    TextFormField(
-      controller: usernameEditor,
-      cursorColor: const Color(0xffc9c9c9),
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: loginTextStyle(color: Colors.black, weight: FontWeight.normal),
-      decoration: const InputDecoration(
-        border: OutlineInputBorder(
-          borderSide: BorderSide.none,
-        ),
-        alignLabelWithHint: true,
-        hintText: "email",
-        hintFadeDuration: Duration(milliseconds: 1000),
-        hintStyle: TextStyle(
-          color: Color(0xffc9c9c9),
-          fontSize: 19,
-          fontWeight: FontWeight.normal,
-        ),
-      ),
-      onChanged: (val) {
-        mail = val;
-      },
-    );
-
-onGoogleSignIn() async {
-  Map<String, dynamic> res =
-      await RegisterHelper.registerHelper.registerWithGoogle();
+anonymous() async {
+  Map<String, dynamic> res = await AuthHelper.authHelper.signInAnonymous();
   if (res['error'] != null) {
-    Fluttertoast.showToast(msg: "Login failed", textColor: Colors.red);
-  } else {
-    Get.offAndToNamed('/home');
-    Fluttertoast.showToast(msg: "Login Success", textColor: Colors.black);
-    CloudFireStoreHelper.fireStoreHelper.addUser();
-  }
-}
-
-onRegister() async {
-  SignInCredentials credentials =
-      SignInCredentials(email: mail ?? "", password: password ?? "");
-  Map<String, dynamic> res =
-      await RegisterHelper.registerHelper.signUp(credentials: credentials);
-  if (res['error'] != null) {
-    Fluttertoast.showToast(msg: "Sign up failed", textColor: Colors.red);
-  } else {
-    usernameEditor.clear();
-    passwordEditor.clear();
-    Get.offAndToNamed('/home');
-
-    Fluttertoast.showToast(msg: "Sign up Success", textColor: Colors.black);
-  }
-}
-
-login() async {
-  SignInCredentials credentials =
-      SignInCredentials(email: mail!, password: password!);
-
-  log("${credentials.password} ||   ${credentials.email}");
-
-  Map<String, dynamic> res =
-      await RegisterHelper.registerHelper.signIn(credentials: credentials);
-  if (res['error'] == null) {
-    usernameEditor.clear();
-    passwordEditor.clear();
-    Get.offAndToNamed('/home');
-
-    Fluttertoast.showToast(msg: "sign in Success", textColor: Colors.black);
-    CloudFireStoreHelper.fireStoreHelper.addUser();
-  } else {
-    Fluttertoast.showToast(msg: "Sign in failed", textColor: Colors.red);
-  }
-}
-
-signInAnonymous() async {
-  Map<String, dynamic> res =
-      await RegisterHelper.registerHelper.signInAnonymous();
-  if (res['error'] != null) {
-    Get.offAllNamed('/home');
+    log("login failed");
   } else {
     log("login success");
+    Get.offAllNamed('/home');
+  }
+}
+
+//todo: signup btn click
+signUp({required String email, required String password}) async {
+  SignInCredentials signUpModel =
+      SignInCredentials(email: email, password: password);
+  Map<String, dynamic> res =
+      await AuthHelper.authHelper.signUp(signUpModel: signUpModel);
+  if (res['error'] != null) {
+    log('signup failed');
+  } else {
+    log('user created');
+
+    Get.toNamed('/home');
+  }
+}
+
+//todo: login btn click
+signIn() async {
+  SignInCredentials signUpModel =
+      SignInCredentials(email: email, password: password);
+  Map<String, dynamic> res =
+      await AuthHelper.authHelper.login(signUpModel: signUpModel);
+  if (res['error'] != null) {
+    Fluttertoast.showToast(msg: 'login failed');
+
+    return log("login failed");
+  } else {
+    Get.offAllNamed('/home');
+
+    FireStoreHelper.fireStoreHelper.addUser();
+
+    return log("login success");
+  }
+}
+//
+// //todo:login with email and password
+// login() async {
+//   LoginCredentials credentials =
+//   LoginCredentials(email: email!, password: password!);
+//   Map<String, dynamic> res =
+//   await AuthHelper.authHelper.signIn(credentials: credentials);
+//   if (res['error'] != null) {
+//     Fluttertoast.showToast(msg: "Login failed", textColor: Colors.red);
+//   } else {
+//     emailController.clear();
+//     passwordController.clear();
+//     Get.toNamed('/home');
+//     Fluttertoast.showToast(msg: "Login Success", textColor: Colors.black);
+//     CloudFireStoreHelper.fireStoreHelper.addUser();
+//   }
+// }
+
+google() async {
+  Map<String, dynamic> res = await AuthHelper.authHelper.signInWithGoogle();
+  if (res['error'] != null) {
+    return log('login failed');
+  } else {
+    Get.offAllNamed('/home');
+    FireStoreHelper.fireStoreHelper.addUser();
   }
 }
