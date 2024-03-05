@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../../views/register/views/components/tabs/sign-up/model/signInModel.dart';
@@ -20,7 +22,7 @@ class RegisterHelper {
   }
 
   Future<Map<String, dynamic>> signUp(
-      {required LoginCredentials credentials}) async {
+      {required SignInCredentials credentials}) async {
     Map<String, dynamic> res = {};
     try {
       UserCredential userCredential =
@@ -29,12 +31,13 @@ class RegisterHelper {
       res['user'] = userCredential.user;
     } on FirebaseAuthException catch (e) {
       res['error'] = e.code;
+      log("${res['error']}");
     }
     return res;
   }
 
   Future<Map<String, dynamic>> signIn(
-      {required LoginCredentials credentials}) async {
+      {required SignInCredentials credentials}) async {
     Map<String, dynamic> res = {};
     try {
       UserCredential userCredential =

@@ -12,7 +12,7 @@ class IntroView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Timer(
-      const Duration(seconds: 2),
+      const Duration(seconds: 6),
       () {
         Get.offAllNamed('/get');
       },

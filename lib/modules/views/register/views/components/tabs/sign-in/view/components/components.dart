@@ -103,16 +103,15 @@ onGoogleSignIn() async {
   if (res['error'] != null) {
     Fluttertoast.showToast(msg: "Login failed", textColor: Colors.red);
   } else {
-    Get.toNamed('/home');
+    Get.offAndToNamed('/home');
     Fluttertoast.showToast(msg: "Login Success", textColor: Colors.black);
     CloudFireStoreHelper.fireStoreHelper.addUser();
   }
 }
 
-//todo:user register btn
 onRegister() async {
-  LoginCredentials credentials =
-      LoginCredentials(email: mail ?? "", password: password ?? "");
+  SignInCredentials credentials =
+      SignInCredentials(email: mail ?? "", password: password ?? "");
   Map<String, dynamic> res =
       await RegisterHelper.registerHelper.signUp(credentials: credentials);
   if (res['error'] != null) {
@@ -120,33 +119,37 @@ onRegister() async {
   } else {
     usernameEditor.clear();
     passwordEditor.clear();
+    Get.offAndToNamed('/home');
+
     Fluttertoast.showToast(msg: "Sign up Success", textColor: Colors.black);
   }
 }
 
-//todo:login with email and password
 login() async {
-  LoginCredentials credentials =
-      LoginCredentials(email: mail!, password: password!);
+  SignInCredentials credentials =
+      SignInCredentials(email: mail!, password: password!);
+
+  log("${credentials.password} ||   ${credentials.email}");
+
   Map<String, dynamic> res =
       await RegisterHelper.registerHelper.signIn(credentials: credentials);
-  if (res['error'] != null) {
-    Fluttertoast.showToast(msg: "Login failed", textColor: Colors.red);
-  } else {
+  if (res['error'] == null) {
     usernameEditor.clear();
     passwordEditor.clear();
-    Get.toNamed('/home');
-    Fluttertoast.showToast(msg: "Login Success", textColor: Colors.black);
+    Get.offAndToNamed('/home');
+
+    Fluttertoast.showToast(msg: "sign in Success", textColor: Colors.black);
     CloudFireStoreHelper.fireStoreHelper.addUser();
+  } else {
+    Fluttertoast.showToast(msg: "Sign in failed", textColor: Colors.red);
   }
 }
 
-//todo:login button click
 signInAnonymous() async {
   Map<String, dynamic> res =
       await RegisterHelper.registerHelper.signInAnonymous();
   if (res['error'] != null) {
-    Get.offAndToNamed('/home');
+    Get.offAllNamed('/home');
   } else {
     log("login success");
   }
