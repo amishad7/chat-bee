@@ -1,6 +1,6 @@
-class SignInCredentials {
+class LoginCredentials {
   String email;
   String password;
 
-  SignInCredentials({required this.email, required this.password});
+  LoginCredentials({required this.email, required this.password});
 }

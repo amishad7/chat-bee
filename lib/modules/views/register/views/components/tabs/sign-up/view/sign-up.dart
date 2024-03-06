@@ -82,8 +82,8 @@ class SignupView extends StatelessWidget {
                         color: const Color(0xffeeeeee),
                         // color: const Color(0xffeeeeee),
                       ),
-                      child:
-                          userTextField(textEditingController: usernameEditor),
+                      child: userTextField(
+                          textEditingController: usernameSecEditor),
                     ),
                   ),
                   Transform.translate(
@@ -97,7 +97,7 @@ class SignupView extends StatelessWidget {
                       ),
                       child: Obx(
                         () => passwordTextField(
-                          textEditingController: passwordEditor,
+                          textEditingController: passwordSecEditor,
                         ),
                       ),
                     ),
@@ -116,9 +116,7 @@ class SignupView extends StatelessWidget {
                       fixedSize: const Size(325, 50),
                       elevation: 20,
                     ),
-                    onPressed: signUp(
-                        password: passwordEditor.text,
-                        email: usernameEditor.text),
+                    onPressed: onRegister,
                     child: Text(
                       "SIGN UP",
                       style: subFont(size: 15, weight: FontWeight.normal),
@@ -134,7 +132,7 @@ class SignupView extends StatelessWidget {
                       //  shadowColor: Colors.blueAccent.withOpacity(0.5),
                       fixedSize: const Size(330, 60),
                     ),
-                    onPressed: anonymous,
+                    onPressed: aninymous,
                     child: Text(
                       "Sign In Anonymous",
                       style: mainFont(size: 15, color: Colors.black),
@@ -150,7 +148,7 @@ class SignupView extends StatelessWidget {
                       //  shadowColor: Colors.blueAccent.withOpacity(0.5),
                       fixedSize: const Size(330, 60),
                     ),
-                    onPressed: google,
+                    onPressed: onGoogleSignin,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

@@ -1,13 +1,55 @@
+import 'package:firebase_project/modules/views/chat/view/chat.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:developer';
 import 'package:get/get.dart';
+import '../../views/home/view/home.dart';
+import '../../views/intro/view/get-started.dart';
+import '../../views/intro/view/splash.dart';
 import '../../views/register/views/components/tabs/sign-in/controller/Sign-in-controller.dart';
+import '../../views/register/views/components/tabs/sign-in/view/sign-in.dart';
+import '../../views/register/views/components/tabs/sign-up/view/sign-up.dart';
+
+List<GetPage<dynamic>>? pages = [
+  // GetPage(
+  //   name: '/',
+  //   page: () => const Register(),
+  // ),
+  GetPage(
+    name: '/intro',
+    page: () => const IntroView(),
+  ),
+
+  GetPage(
+    name: '/get',
+    page: () => const GetStarted(),
+  ),
+  GetPage(
+    name: '/sign-in',
+    page: () => const SignInView(),
+  ),
+  GetPage(
+    name: '/sign-up',
+    page: () => const SignupView(),
+  ),
+  GetPage(
+    name: '/home',
+    page: () => const HomeView(),
+  ),
+  GetPage(
+    name: '/chat',
+    page: () => const ChatView(),
+  ),
+];
 
 bool visited = false;
 String? password;
 String? mail;
 
+TextEditingController usernameSecEditor = TextEditingController();
+TextEditingController passwordSecEditor = TextEditingController();
+TextEditingController usernameEditor = TextEditingController();
+TextEditingController passwordEditor = TextEditingController();
 SignInController loginController = Get.put(SignInController());
 
 TextStyle loginTextStyle(
@@ -20,17 +62,13 @@ TextStyle loginTextStyle(
       fontSize: size,
     );
 
-TextEditingController usernameEditor = TextEditingController();
-
-TextEditingController passwordEditor = TextEditingController();
-
 var seePassword = loginController.model.password;
 
 passwordTextField({required TextEditingController textEditingController}) =>
     TextFormField(
       style: loginTextStyle(color: Colors.black, weight: FontWeight.normal),
 
-      controller: passwordEditor,
+      controller: textEditingController,
       scrollPhysics: const BouncingScrollPhysics(),
       autocorrect: false,
       mouseCursor: MouseCursor.defer,
@@ -73,9 +111,11 @@ passwordTextField({required TextEditingController textEditingController}) =>
       },
     );
 
+//todo:email field
+
 userTextField({required TextEditingController textEditingController}) =>
     TextFormField(
-      controller: usernameEditor,
+      controller: textEditingController,
       cursorColor: const Color(0xffc9c9c9),
       autovalidateMode: AutovalidateMode.onUserInteraction,
       style: loginTextStyle(color: Colors.black, weight: FontWeight.normal),

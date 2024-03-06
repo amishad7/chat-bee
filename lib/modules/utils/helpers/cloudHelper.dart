@@ -4,15 +4,14 @@ import 'package:get/get.dart';
 import '../../views/home/model/chatModel.dart';
 import 'authHelper.dart';
 
-class FireStoreHelper {
-  //singleTurn
-  FireStoreHelper._();
-  static final FireStoreHelper fireStoreHelper = FireStoreHelper._();
+class CloudFireStoreHelper {
+  CloudFireStoreHelper._();
+
+  static final CloudFireStoreHelper fireStoreHelper = CloudFireStoreHelper._();
+
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  //AddUser
 
   Future<void> addUser() async {
-    log("Execute");
     await firestore
         .collection("users")
         .doc(AuthHelper.auth.currentUser?.uid)
@@ -20,17 +19,12 @@ class FireStoreHelper {
       'name': (AuthHelper.auth.currentUser?.displayName == null)
           ? "${AuthHelper.auth.currentUser?.email?.split("@")[0].capitalizeFirst}"
           : "${AuthHelper.auth.currentUser?.displayName}",
-      'email': "${AuthHelper.auth.currentUser?.email}",
-      'uid': "${AuthHelper.auth.currentUser?.uid}",
-      'dp': (AuthHelper.auth.currentUser?.photoURL == null)
-          ? "https://e7.pngegg.com/pngimages/799/987/png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png"
-          : AuthHelper.auth.currentUser?.photoURL,
+      'email': AuthHelper.auth.currentUser?.email,
+      'uid': AuthHelper.auth.currentUser?.uid,
+      'profile_picture': (AuthHelper.auth.currentUser?.photoURL == null)
+          ? "null"
+          : "${AuthHelper.auth.currentUser?.photoURL}",
     });
-    log("User Added");
-  }
-
-  Stream<QuerySnapshot<Map<String, dynamic>>> getPost() {
-    return firestore.collection('posts').snapshots();
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> fetchUser() {

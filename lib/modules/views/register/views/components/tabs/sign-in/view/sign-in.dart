@@ -12,7 +12,8 @@ class SignInView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginFormFieldKey = GlobalKey<FormFieldState>();
-
+    TextEditingController usernameEditor = TextEditingController();
+    TextEditingController passwordEditor = TextEditingController();
     return Scaffold(
       backgroundColor: widgetColor,
       body: SafeArea(
@@ -80,12 +81,8 @@ class SignInView extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  // TODO: USERNAME TEXT FORM FILED
                   Transform.translate(
                     offset: const Offset(0, 260),
-
-                    //TODO: DECORATE CONTAINER FAIRY
-
                     child: Container(
                       margin: const EdgeInsets.symmetric(horizontal: 20),
                       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -98,7 +95,6 @@ class SignInView extends StatelessWidget {
                           userTextField(textEditingController: usernameEditor),
                     ),
                   ),
-
                   Transform.translate(
                     offset: const Offset(0, 280),
                     child: Container(
@@ -115,7 +111,6 @@ class SignInView extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   Transform.translate(
                     offset: const Offset(70, 270),
                     child: TextButton(
@@ -149,9 +144,7 @@ class SignInView extends StatelessWidget {
                       fixedSize: const Size(325, 50),
                       elevation: 20,
                     ),
-                    onPressed: signIn(
-                        email: usernameEditor.text,
-                        password: passwordEditor.text),
+                    onPressed: login,
                     child: Text(
                       "SIGN IN",
                       style: subFont(size: 15, weight: FontWeight.normal),
@@ -167,7 +160,7 @@ class SignInView extends StatelessWidget {
                       //  shadowColor: Colors.blueAccent.withOpacity(0.5),
                       fixedSize: const Size(330, 60),
                     ),
-                    onPressed: anonymous,
+                    onPressed: aninymous,
                     child: Text(
                       "Sign In Anonymous",
                       style: mainFont(size: 15, color: Colors.black),
@@ -183,7 +176,7 @@ class SignInView extends StatelessWidget {
                       //  shadowColor: Colors.blueAccent.withOpacity(0.5),
                       fixedSize: const Size(330, 60),
                     ),
-                    onPressed: google,
+                    onPressed: onGoogleSignin,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

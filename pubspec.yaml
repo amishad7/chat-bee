@@ -45,6 +45,7 @@ dependencies:
   google_sign_in:
   cloud_firestore:
   flutter_local_notifications:
+  firebase_database: ^10.4.0
 
 
 dev_dependencies:
