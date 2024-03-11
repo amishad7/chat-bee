@@ -12,6 +12,7 @@ import '../../views/register/views/components/tabs/sign-in/view/sign-in.dart';
 import '../../views/register/views/components/tabs/sign-up/model/signInModel.dart';
 import '../../views/register/views/components/tabs/sign-up/view/sign-up.dart';
 import '../helpers/authHelper.dart';
+import '../helpers/cloudHelper.dart';
 
 List<GetPage<dynamic>>? pages = [
   // GetPage(
@@ -172,10 +173,34 @@ onSignUp() async {
     passwordSecEditor.clear();
     Fluttertoast.showToast(msg: "Sign up Success", textColor: Colors.black);
 
-    Get.offAllNamed('/home');
+    Get.offAllNamed('/sign-in');
   }
 }
 
-SignOut() {
+signOut() {
   AuthHelper.authHelper.signOut();
+  Get.offAndToNamed('/get');
+}
+
+onAnonymous() {
+  AuthHelper.authHelper.signInAnonymous();
+  Get.offAndToNamed('/home');
+}
+
+onSignIn() async {
+  LoginCredentials credentials = LoginCredentials(
+      email: usernameEditor.text, password: passwordEditor.text);
+  Map<String, dynamic> res =
+      await AuthHelper.authHelper.signIn(credentials: credentials);
+  if (res['error'] != null) {
+    Fluttertoast.showToast(msg: "Login failed", textColor: Colors.red);
+
+    Get.snackbar('ERROR', "${res['error']}");
+  } else {
+    usernameEditor.clear();
+    passwordEditor.clear();
+    Get.toNamed('/home');
+    Fluttertoast.showToast(msg: "Login Success", textColor: Colors.black);
+    CloudFireStoreHelper.fireStoreHelper.addUser();
+  }
 }

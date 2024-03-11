@@ -9,37 +9,39 @@ class CloudFireStoreHelper {
 
   static final CloudFireStoreHelper fireStoreHelper = CloudFireStoreHelper._();
 
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
   Future<void> addUser() async {
-    await firestore
+    await fireStore
         .collection("users")
         .doc(AuthHelper.auth.currentUser?.uid)
-        .set({
-      'name': (AuthHelper.auth.currentUser?.displayName == null)
-          ? "${AuthHelper.auth.currentUser?.email?.split("@")[0].capitalizeFirst}"
-          : "${AuthHelper.auth.currentUser?.displayName}",
-      'email': AuthHelper.auth.currentUser?.email,
-      'uid': AuthHelper.auth.currentUser?.uid,
-      'profile_picture': (AuthHelper.auth.currentUser?.photoURL == null)
-          ? "null"
-          : "${AuthHelper.auth.currentUser?.photoURL}",
-    });
+        .set(
+      {
+        'name': (AuthHelper.auth.currentUser?.displayName == null)
+            ? "${AuthHelper.auth.currentUser?.email?.split("@")[0].capitalizeFirst}"
+            : "${AuthHelper.auth.currentUser?.displayName}",
+        'email': AuthHelper.auth.currentUser?.email,
+        'uid': AuthHelper.auth.currentUser?.uid,
+        'profile_picture': (AuthHelper.auth.currentUser?.photoURL == null)
+            ? "null"
+            : "${AuthHelper.auth.currentUser?.photoURL}",
+      },
+    );
   }
 
   Stream<QuerySnapshot<Map<String, dynamic>>> fetchUser() {
-    return firestore
+    return fireStore
         .collection('users')
         .where('uid', isNotEqualTo: AuthHelper.auth.currentUser?.uid)
         .snapshots();
   }
 
-  Future<void> sendMessage({required Chat chatdetails}) async {
+  Future<void> sendMessage({required Chat chatDetails}) async {
     //todo:my current user
-    String u1 = chatdetails.sender;
-    String u2 = chatdetails.receiver;
+    String u1 = chatDetails.sender;
+    String u2 = chatDetails.receiver;
     QuerySnapshot<Map<String, dynamic>> querySnapshot =
-        await firestore.collection('chats').get();
+        await fireStore.collection('chats').get();
     List<QueryDocumentSnapshot<Map<String, dynamic>>> fetchedChatID =
         querySnapshot.docs;
     bool isChatRoomAvailable = false;
@@ -56,46 +58,46 @@ class CloudFireStoreHelper {
     }
     if (isChatRoomAvailable == true) {
       log("CHAT ROOM IS AVAILABLE");
-      await firestore
+      await fireStore
           .collection("chats")
-          .doc("${fetchedUser1}_${fetchedUser2}")
+          .doc("${fetchedUser1}_$fetchedUser2")
           .collection("messages")
           .add({
-        "sentby": chatdetails.sender,
-        "receivedby": chatdetails.receiver,
-        "message": chatdetails.message,
+        "sender": chatDetails.sender,
+        "receiver": chatDetails.receiver,
+        "message": chatDetails.message,
         "timestamp": FieldValue.serverTimestamp(),
       });
     } else {
       log("CHAT ROOM IS NOT AVAILABLE");
-      await firestore
+      await fireStore
           .collection("chats")
-          .doc("${chatdetails.receiver}_${chatdetails.sender}")
+          .doc("${chatDetails.receiver}_${chatDetails.sender}")
           .set({
-        "sender": chatdetails.sender,
-        "receiver": chatdetails.receiver,
+        "sender": chatDetails.sender,
+        "receiver": chatDetails.receiver,
       });
 
-      await firestore
+      await fireStore
           .collection("chats")
-          .doc("${chatdetails.receiver}_${chatdetails.sender}")
+          .doc("${chatDetails.receiver}_${chatDetails.sender}")
           .collection("messages")
           .add({
-        "sentby": chatdetails.sender,
-        "receivedby": chatdetails.receiver,
-        "message": chatdetails.message,
+        "sender": chatDetails.sender,
+        "receiver": chatDetails.receiver,
+        "message": chatDetails.message,
         "timestamp": FieldValue.serverTimestamp(),
       });
     }
   }
 
   Future<Stream<QuerySnapshot<Map<String, dynamic>>>> fetchMessage(
-      {required Chat chatdetails}) async {
+      {required Chat chatDetails}) async {
     //todo:my current user
-    String u1 = chatdetails.sender;
-    String u2 = chatdetails.receiver;
+    String u1 = chatDetails.sender;
+    String u2 = chatDetails.receiver;
     QuerySnapshot<Map<String, dynamic>> querySnapshot =
-        await firestore.collection('chats').get();
+        await fireStore.collection('chats').get();
     List<QueryDocumentSnapshot<Map<String, dynamic>>> fetchedChatID =
         querySnapshot.docs;
     bool isChatRoomAvailable = false;
@@ -112,25 +114,25 @@ class CloudFireStoreHelper {
     }
     if (isChatRoomAvailable == true) {
       log("CHAT ROOM IS AVAILABLE");
-      return firestore
+      return fireStore
           .collection("chats")
-          .doc("${fetchedUser1}_${fetchedUser2}")
+          .doc("${fetchedUser1}_$fetchedUser2")
           .collection("messages")
           .orderBy('timestamp', descending: true)
           .snapshots();
     } else {
       log("CHAT ROOM IS NOT AVAILABLE");
-      await firestore
+      await fireStore
           .collection("chats")
-          .doc("${chatdetails.receiver}_${chatdetails.sender}")
+          .doc("${chatDetails.receiver}_${chatDetails.sender}")
           .set({
-        "sender": chatdetails.sender,
-        "receiver": chatdetails.receiver,
+        "sender": chatDetails.sender,
+        "receiver": chatDetails.receiver,
       });
 
-      return firestore
+      return fireStore
           .collection("chats")
-          .doc("${chatdetails.receiver}_${chatdetails.sender}")
+          .doc("${chatDetails.receiver}_${chatDetails.sender}")
           .collection("messages")
           .orderBy('timestamp', descending: true)
           .snapshots();

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_project/modules/utils/globals/globals.dart';
 import 'package:firebase_project/modules/utils/helpers/authHelper.dart';
@@ -15,12 +17,6 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    logout() {
-      AuthHelper.authHelper.signOut();
-      Fluttertoast.showToast(msg: "Signed Out", textColor: Colors.black);
-      Get.toNamed('/sign-in');
-    }
-
     Stream? newText;
 
     List images = [
@@ -37,15 +33,24 @@ class HomeView extends StatelessWidget {
         leading: CircleAvatar(
           radius: 10,
           backgroundColor: widgetColor,
-          child: IconButton(
-            onPressed: SignOut,
-            icon: Icon(Icons.drag_handle_sharp),
+          child: const IconButton(
+            onPressed: signOut,
+            icon: Icon(
+              Icons.drag_handle_sharp,
+              color: Colors.white,
+              size: 30,
+            ),
           ),
         ),
-        title: Text(
-          "Chat Bee",
-          style: subFont(size: 30),
-        ),
+        title: (AuthHelper.auth.currentUser?.displayName == null)
+            ? Text(
+                "${AuthHelper.auth.currentUser?.email?.split("@")[0].capitalizeFirst}",
+                style: subFont(),
+              )
+            : Text(
+                "${AuthHelper.auth.currentUser?.displayName}",
+                style: subFont(),
+              ),
         centerTitle: true,
         toolbarHeight: 120,
         backgroundColor: widgetColor,
@@ -64,73 +69,73 @@ class HomeView extends StatelessWidget {
           } else if (snapshot.hasData) {
             List<QueryDocumentSnapshot<Map<String, dynamic>>>? users =
                 snapshot.data?.docs;
+
+            log("${users}");
+
             return ListView.builder(
               shrinkWrap: true,
               itemCount: users?.length,
               itemBuilder: (ctx, i) {
-                return ListView.builder(
-                  itemCount: images.length,
-                  itemBuilder: (context, i) {
-                    return GestureDetector(
-                      onTap: () async {
-                        Get.toNamed('/chat');
+                log(" title: ${users?[i]['name']} ${users?[i]['email']}");
 
-                        Chat chat = Chat(
-                          message: '',
-                          receiver: "${users?[i]['uid']}",
-                          sender: "${AuthHelper.auth.currentUser?.uid}",
-                        );
-                        newText = await CloudFireStoreHelper.fireStoreHelper
-                            .fetchMessage(chatdetails: chat);
-                        Get.toNamed('/chat', arguments: [
-                          "${users?[i]['name']}",
-                          "${users?[i]['profile_picture']}",
-                          "${users?[i]['uid']}",
-                        ]);
-                      },
-                      child: Container(
-                        height: Get.height / 10,
-                        padding: const EdgeInsets.symmetric(horizontal: 23),
-                        decoration: BoxDecoration(
-                          color: Colors.yellow.withOpacity(0.0),
-                          borderRadius: BorderRadius.circular(0),
-                          // border: Border.symmetric(
-                          //   horizontal: BorderSide(color: Colors.yellowAccent, width: 2),
-                          // ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              height: Get.height / 18.5,
-                              width: Get.width / 8.5,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(05),
-                                color: Colors.yellow,
-                                image: DecorationImage(
-                                  image: NetworkImage("${images[i]}"),
-                                ),
-                              ),
-                            ),
-                            Text(
-                              "${users?[i]['name']}",
-                              style: subFont(
-                                size: 20,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Text(
-                              "${users?[i]['timestamp']}",
-                              style: subFont(
-                                size: 10,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                return GestureDetector(
+                  onTap: () async {
+                    Get.toNamed('/chat');
+
+                    Chat chat = Chat(
+                      message: '',
+                      receiver: "${users?[i]['uid']}",
+                      sender: "${AuthHelper.auth.currentUser?.uid}",
                     );
+                    newText = await CloudFireStoreHelper.fireStoreHelper
+                        .fetchMessage(chatDetails: chat);
+                    Get.toNamed('/chat', arguments: [
+                      "${users?[i]['name']}",
+                      "${users?[i]['profile_picture']}",
+                      "${users?[i]['uid']}",
+                    ]);
                   },
+                  child: Container(
+                    height: Get.height / 10,
+                    padding: const EdgeInsets.symmetric(horizontal: 23),
+                    decoration: BoxDecoration(
+                      color: Colors.yellow.withOpacity(0.0),
+                      borderRadius: BorderRadius.circular(0),
+                      // border: Border.symmetric(
+                      //   horizontal: BorderSide(color: Colors.yellowAccent, width: 2),
+                      // ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          height: Get.height / 18.5,
+                          width: Get.width / 8.5,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(05),
+                            color: Colors.yellow,
+                            image: DecorationImage(
+                              image: NetworkImage("${images[i]}"),
+                            ),
+                          ),
+                        ),
+                        Text(
+                          "${users?[i]['name']}",
+                          style: subFont(
+                            size: 20,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Text(
+                          "${users?[i]['timestamp']}",
+                          style: subFont(
+                            size: 10,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 );
               },
             );

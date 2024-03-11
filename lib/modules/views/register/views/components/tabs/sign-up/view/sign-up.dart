@@ -1,10 +1,6 @@
 import 'dart:developer';
-import 'package:firebase_project/modules/utils/helpers/authHelper.dart';
 import 'package:firebase_project/modules/views/intro/view/components/components.dart';
-import 'package:firebase_project/modules/views/register/views/components/tabs/sign-up/model/signInModel.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import '../../../../../../../utils/globals/globals.dart';
 
@@ -13,7 +9,7 @@ class SignupView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var seePassword = loginController.model.password;
+    // var seePassword = loginController.model.password;
     final signupFormFieldKey = GlobalKey<FormFieldState>();
 
     return Scaffold(
@@ -134,41 +130,13 @@ class SignupView extends StatelessWidget {
                       //  shadowColor: Colors.blueAccent.withOpacity(0.5),
                       fixedSize: const Size(330, 60),
                     ),
-                    onPressed: () {},
+                    onPressed: onAnonymous,
                     child: Text(
                       "Sign In Anonymous",
                       style: mainFont(size: 15, color: Colors.black),
                     ),
                   ),
                   const SizedBox(height: 34),
-                  FilledButton(
-                    style: FilledButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      //  shape: const StadiumBorder(),
-                      // padding: EdgeInsets.only(top: 40),
-                      elevation: 5,
-                      //  shadowColor: Colors.blueAccent.withOpacity(0.5),
-                      fixedSize: const Size(330, 60),
-                    ),
-                    onPressed: () {},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const FaIcon(
-                          FontAwesomeIcons.google,
-                          color: Colors.black,
-                        ),
-                        Text(
-                          "Continue with Google",
-                          style: mainFont(size: 15, color: Colors.black),
-                        ),
-                        const Icon(
-                          Icons.arrow_circle_right_rounded,
-                          color: Colors.black,
-                        ),
-                      ],
-                    ),
-                  ),
                 ],
               ),
             ),

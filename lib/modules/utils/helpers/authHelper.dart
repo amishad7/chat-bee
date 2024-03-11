@@ -12,12 +12,11 @@ class AuthHelper {
   final User? user = FirebaseAuth.instance.currentUser;
 
   //todo:Anonymous login
-  Future<Map<String, dynamic>> signInAninyymous() async {
+  Future<Map<String, dynamic>> signInAnonymous() async {
     Map<String, dynamic> res = {};
     try {
       UserCredential userCredential = await auth.signInAnonymously();
       res['user'] = userCredential.user;
-      Get.toNamed("/home");
     } on FirebaseAuthException catch (e) {
       res['error'] = e.code;
     }
@@ -45,9 +44,7 @@ class AuthHelper {
     Map<String, dynamic> res = {};
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
-          email: "ryan12@gmail.com", password: "1234567");
-      // UserCredential userCredential = await auth.signInWithEmailAndPassword(
-      //     email: credentials.email, password: credentials.password);
+          email: credentials.email, password: credentials.password);
       res['user'] = userCredential.user;
     } on FirebaseAuthException catch (e) {
       res['error'] = e.code;
@@ -56,7 +53,7 @@ class AuthHelper {
   }
 
   // todo:sign in with google
-  Future<Map<String, dynamic>> googleSignin() async {
+  Future<Map<String, dynamic>> signInWithGoogle() async {
     Map<String, dynamic> res = {};
     try {
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();

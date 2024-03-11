@@ -66,9 +66,4 @@ flutter {
 }
 
 dependencies {
-//
-//    implementation 'com.google.firebase:firebase-auth:23.0.0'  // Replace with the latest version
-//    implementation 'com.google.firebase:firebase-database:23.0.0'  // Replace with the latest version
-//
-
 }
