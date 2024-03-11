@@ -14,7 +14,7 @@ void main() async {
   runApp(
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/home',
+      initialRoute: '/intro',
       getPages: pages,
     ),
   );

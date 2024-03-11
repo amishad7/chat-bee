@@ -44,38 +44,42 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDQcsw04BkXmuz5wnt8Q_5maVvQMYYK0Js',
-    appId: '1:767615754171:web:0e0e563ee0e2f3a253ee9e',
-    messagingSenderId: '767615754171',
-    projectId: 'fir-flutter-project-e7898',
-    authDomain: 'fir-flutter-project-e7898.firebaseapp.com',
-    storageBucket: 'fir-flutter-project-e7898.appspot.com',
-    measurementId: 'G-7NJTVH4EKT',
+    apiKey: 'AIzaSyA44TiYjzM_258DNhc7pzP-EjhOhto0iDw',
+    appId: '1:115526236151:web:53a2267472d2c3827820f2',
+    messagingSenderId: '115526236151',
+    projectId: 'chat-app-demo-a9598',
+    authDomain: 'chat-app-demo-a9598.firebaseapp.com',
+    storageBucket: 'chat-app-demo-a9598.appspot.com',
+    measurementId: 'G-24ND0QX28Y',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCgaNR1YTcvNWOV9iRQ0jkifDadMJvrkVM',
-    appId: '1:767615754171:android:897c823a2f6e8b6253ee9e',
-    messagingSenderId: '767615754171',
-    projectId: 'fir-flutter-project-e7898',
-    storageBucket: 'fir-flutter-project-e7898.appspot.com',
+    apiKey: 'AIzaSyCift-HgJCkjZfX4JiTEgkvA_p2T5vOZ1M',
+    appId: '1:115526236151:android:3747460eb11008197820f2',
+    messagingSenderId: '115526236151',
+    projectId: 'chat-app-demo-a9598',
+    storageBucket: 'chat-app-demo-a9598.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDuu60KyMxET6ekWiTOqUEA13GAVD4XoEs',
-    appId: '1:767615754171:ios:b037643447f462ad53ee9e',
-    messagingSenderId: '767615754171',
-    projectId: 'fir-flutter-project-e7898',
-    storageBucket: 'fir-flutter-project-e7898.appspot.com',
+    apiKey: 'AIzaSyCv6LO02fH_c1R9y8FUkrqx5MpL1vwy4-I',
+    appId: '1:115526236151:ios:ab0cfcedcb4fb54c7820f2',
+    messagingSenderId: '115526236151',
+    projectId: 'chat-app-demo-a9598',
+    storageBucket: 'chat-app-demo-a9598.appspot.com',
+    androidClientId: '115526236151-psdgqu35ssqr8tgtmihabtacechthiak.apps.googleusercontent.com',
+    iosClientId: '115526236151-ro7ovs55c8uq3fdqt6fqtd2ffit0uhcp.apps.googleusercontent.com',
     iosBundleId: 'com.example.firebaseProject',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDuu60KyMxET6ekWiTOqUEA13GAVD4XoEs',
-    appId: '1:767615754171:ios:b5a9ce7b4e8311c853ee9e',
-    messagingSenderId: '767615754171',
-    projectId: 'fir-flutter-project-e7898',
-    storageBucket: 'fir-flutter-project-e7898.appspot.com',
+    apiKey: 'AIzaSyCv6LO02fH_c1R9y8FUkrqx5MpL1vwy4-I',
+    appId: '1:115526236151:ios:4509fdebd9e04cf37820f2',
+    messagingSenderId: '115526236151',
+    projectId: 'chat-app-demo-a9598',
+    storageBucket: 'chat-app-demo-a9598.appspot.com',
+    androidClientId: '115526236151-psdgqu35ssqr8tgtmihabtacechthiak.apps.googleusercontent.com',
+    iosClientId: '115526236151-v73pp2tv067qhd2jf2s5qsc6chgjbrik.apps.googleusercontent.com',
     iosBundleId: 'com.example.firebaseProject.RunnerTests',
   );
 }

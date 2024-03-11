@@ -1,5 +1,6 @@
 import 'package:firebase_project/modules/views/chat/view/chat.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:developer';
 import 'package:get/get.dart';
@@ -8,7 +9,9 @@ import '../../views/intro/view/get-started.dart';
 import '../../views/intro/view/splash.dart';
 import '../../views/register/views/components/tabs/sign-in/controller/Sign-in-controller.dart';
 import '../../views/register/views/components/tabs/sign-in/view/sign-in.dart';
+import '../../views/register/views/components/tabs/sign-up/model/signInModel.dart';
 import '../../views/register/views/components/tabs/sign-up/view/sign-up.dart';
+import '../helpers/authHelper.dart';
 
 List<GetPage<dynamic>>? pages = [
   // GetPage(
@@ -156,3 +159,23 @@ TextStyle subFont(
       fontWeight: weight,
       fontSize: size,
     );
+
+onSignUp() async {
+  LoginCredentials credentials = LoginCredentials(
+      email: usernameSecEditor.text, password: passwordSecEditor.text);
+  Map<String, dynamic> res =
+      await AuthHelper.authHelper.signUp(credentials: credentials);
+  if (res['error'] != null) {
+    Fluttertoast.showToast(msg: "Sign up failed", textColor: Colors.red);
+  } else {
+    usernameSecEditor.clear();
+    passwordSecEditor.clear();
+    Fluttertoast.showToast(msg: "Sign up Success", textColor: Colors.black);
+
+    Get.offAllNamed('/home');
+  }
+}
+
+SignOut() {
+  AuthHelper.authHelper.signOut();
+}

@@ -34,6 +34,14 @@ class HomeView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: CircleAvatar(
+          radius: 10,
+          backgroundColor: widgetColor,
+          child: IconButton(
+            onPressed: SignOut,
+            icon: Icon(Icons.drag_handle_sharp),
+          ),
+        ),
         title: Text(
           "Chat Bee",
           style: subFont(size: 30),
@@ -53,163 +61,161 @@ class HomeView extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return Text("${snapshot.error}");
-          } else if (snapshot.hasError) {
+          } else if (snapshot.hasData) {
             List<QueryDocumentSnapshot<Map<String, dynamic>>>? users =
                 snapshot.data?.docs;
             return ListView.builder(
               shrinkWrap: true,
               itemCount: users?.length,
               itemBuilder: (ctx, i) {
-                return Container();
+                return ListView.builder(
+                  itemCount: images.length,
+                  itemBuilder: (context, i) {
+                    return GestureDetector(
+                      onTap: () async {
+                        Get.toNamed('/chat');
+
+                        Chat chat = Chat(
+                          message: '',
+                          receiver: "${users?[i]['uid']}",
+                          sender: "${AuthHelper.auth.currentUser?.uid}",
+                        );
+                        newText = await CloudFireStoreHelper.fireStoreHelper
+                            .fetchMessage(chatdetails: chat);
+                        Get.toNamed('/chat', arguments: [
+                          "${users?[i]['name']}",
+                          "${users?[i]['profile_picture']}",
+                          "${users?[i]['uid']}",
+                        ]);
+                      },
+                      child: Container(
+                        height: Get.height / 10,
+                        padding: const EdgeInsets.symmetric(horizontal: 23),
+                        decoration: BoxDecoration(
+                          color: Colors.yellow.withOpacity(0.0),
+                          borderRadius: BorderRadius.circular(0),
+                          // border: Border.symmetric(
+                          //   horizontal: BorderSide(color: Colors.yellowAccent, width: 2),
+                          // ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height: Get.height / 18.5,
+                              width: Get.width / 8.5,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(05),
+                                color: Colors.yellow,
+                                image: DecorationImage(
+                                  image: NetworkImage("${images[i]}"),
+                                ),
+                              ),
+                            ),
+                            Text(
+                              "${users?[i]['name']}",
+                              style: subFont(
+                                size: 20,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Text(
+                              "${users?[i]['timestamp']}",
+                              style: subFont(
+                                size: 10,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
               },
             );
           }
 
-          return ListView.builder(
-            itemCount: images.length,
-            itemBuilder: (context, i) {
-              return GestureDetector(
-                onTap: () {
-                  Get.toNamed('/chat');
-
-                  // Chat chat = Chat(
-                  //   message: '',
-                  //   receiver: "${users?[i]['uid']}",
-                  //   sender: "${AuthHelper.auth.currentUser?.uid}",
-                  // );
-                  // newText = await CloudFireStoreHelper.fireStoreHelper
-                  //     .fetchMessage(chatdetails: chat);
-                  // Get.toNamed('/chat', arguments: [
-                  //   "${users?[i]['name']}",
-                  //   "${users?[i]['profile_picture']}",
-                  //   "${users?[i]['uid']}",
-                  // ]);
-                },
-                child: Container(
-                  height: Get.height / 10,
-                  padding: const EdgeInsets.symmetric(horizontal: 23),
-                  decoration: BoxDecoration(
-                    color: Colors.yellow.withOpacity(0.0),
-                    borderRadius: BorderRadius.circular(0),
-                    // border: Border.symmetric(
-                    //   horizontal: BorderSide(color: Colors.yellowAccent, width: 2),
-                    // ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        height: Get.height / 18.5,
-                        width: Get.width / 8.5,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(05),
-                          color: Colors.yellow,
-                          image: DecorationImage(
-                            image: NetworkImage("${images[i]}"),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        "User name",
-                        style: subFont(
-                          size: 20,
-                          color: Colors.black,
-                        ),
-                      ),
-                      Text(
-                        "time stamp",
-                        style: subFont(
-                          size: 10,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
+          return Shimmer.fromColors(
+            baseColor: Colors.grey.shade300,
+            highlightColor: Colors.white,
+            child: const Column(
+              children: [
+                Card(
+                  child: ListTile(
+                    title: Text(""),
+                    subtitle: Text(""),
+                    leading: CircleAvatar(
+                      radius: 30,
+                    ),
                   ),
                 ),
-              );
-            },
+                Card(
+                  child: ListTile(
+                    title: Text(""),
+                    subtitle: Text(""),
+                    leading: CircleAvatar(
+                      radius: 30,
+                    ),
+                  ),
+                ),
+                Card(
+                  child: ListTile(
+                    title: Text(""),
+                    subtitle: Text(""),
+                    leading: CircleAvatar(
+                      radius: 30,
+                    ),
+                  ),
+                ),
+                Card(
+                  child: ListTile(
+                    title: Text(""),
+                    subtitle: Text(""),
+                    leading: CircleAvatar(
+                      radius: 30,
+                    ),
+                  ),
+                ),
+                Card(
+                  child: ListTile(
+                    title: Text(""),
+                    subtitle: Text(""),
+                    leading: CircleAvatar(
+                      radius: 30,
+                    ),
+                  ),
+                ),
+                Card(
+                  child: ListTile(
+                    title: Text(""),
+                    subtitle: Text(""),
+                    leading: CircleAvatar(
+                      radius: 30,
+                    ),
+                  ),
+                ),
+                Card(
+                  child: ListTile(
+                    title: Text(""),
+                    subtitle: Text(""),
+                    leading: CircleAvatar(
+                      radius: 30,
+                    ),
+                  ),
+                ),
+                Card(
+                  child: ListTile(
+                    title: Text(""),
+                    subtitle: Text(""),
+                    leading: CircleAvatar(
+                      radius: 30,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           );
-
-          // return Shimmer.fromColors(
-          //   baseColor: Colors.grey.shade300,
-          //   highlightColor: Colors.white,
-          //   child: const Column(
-          //     children: [
-          //       Card(
-          //         child: ListTile(
-          //           title: Text(""),
-          //           subtitle: Text(""),
-          //           leading: CircleAvatar(
-          //             radius: 30,
-          //           ),
-          //         ),
-          //       ),
-          //       Card(
-          //         child: ListTile(
-          //           title: Text(""),
-          //           subtitle: Text(""),
-          //           leading: CircleAvatar(
-          //             radius: 30,
-          //           ),
-          //         ),
-          //       ),
-          //       Card(
-          //         child: ListTile(
-          //           title: Text(""),
-          //           subtitle: Text(""),
-          //           leading: CircleAvatar(
-          //             radius: 30,
-          //           ),
-          //         ),
-          //       ),
-          //       Card(
-          //         child: ListTile(
-          //           title: Text(""),
-          //           subtitle: Text(""),
-          //           leading: CircleAvatar(
-          //             radius: 30,
-          //           ),
-          //         ),
-          //       ),
-          //       Card(
-          //         child: ListTile(
-          //           title: Text(""),
-          //           subtitle: Text(""),
-          //           leading: CircleAvatar(
-          //             radius: 30,
-          //           ),
-          //         ),
-          //       ),
-          //       Card(
-          //         child: ListTile(
-          //           title: Text(""),
-          //           subtitle: Text(""),
-          //           leading: CircleAvatar(
-          //             radius: 30,
-          //           ),
-          //         ),
-          //       ),
-          //       Card(
-          //         child: ListTile(
-          //           title: Text(""),
-          //           subtitle: Text(""),
-          //           leading: CircleAvatar(
-          //             radius: 30,
-          //           ),
-          //         ),
-          //       ),
-          //       Card(
-          //         child: ListTile(
-          //           title: Text(""),
-          //           subtitle: Text(""),
-          //           leading: CircleAvatar(
-          //             radius: 30,
-          //           ),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // );
         },
       ),
     );

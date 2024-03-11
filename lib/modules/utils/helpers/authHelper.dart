@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../../views/register/views/components/tabs/sign-up/model/signInModel.dart';
 
@@ -8,12 +9,15 @@ class AuthHelper {
   static FirebaseAuth auth = FirebaseAuth.instance;
   static GoogleSignIn googleSignIn = GoogleSignIn();
 
+  final User? user = FirebaseAuth.instance.currentUser;
+
   //todo:Anonymous login
   Future<Map<String, dynamic>> signInAninyymous() async {
     Map<String, dynamic> res = {};
     try {
       UserCredential userCredential = await auth.signInAnonymously();
       res['user'] = userCredential.user;
+      Get.toNamed("/home");
     } on FirebaseAuthException catch (e) {
       res['error'] = e.code;
     }
@@ -25,8 +29,9 @@ class AuthHelper {
       {required LoginCredentials credentials}) async {
     Map<String, dynamic> res = {};
     try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+      final userCredential = await auth.createUserWithEmailAndPassword(
           email: credentials.email, password: credentials.password);
+
       res['user'] = userCredential.user;
     } on FirebaseAuthException catch (e) {
       res['error'] = e.code;
@@ -40,7 +45,9 @@ class AuthHelper {
     Map<String, dynamic> res = {};
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
-          email: credentials.email, password: credentials.password);
+          email: "ryan12@gmail.com", password: "1234567");
+      // UserCredential userCredential = await auth.signInWithEmailAndPassword(
+      //     email: credentials.email, password: credentials.password);
       res['user'] = userCredential.user;
     } on FirebaseAuthException catch (e) {
       res['error'] = e.code;

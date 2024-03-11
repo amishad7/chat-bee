@@ -1,10 +1,12 @@
 import 'dart:developer';
+import 'package:firebase_project/modules/utils/helpers/authHelper.dart';
 import 'package:firebase_project/modules/views/intro/view/components/components.dart';
+import 'package:firebase_project/modules/views/register/views/components/tabs/sign-up/model/signInModel.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import '../../../../../../../utils/globals/globals.dart';
-import '../../sign-in/view/components/components.dart';
 
 class SignupView extends StatelessWidget {
   const SignupView({super.key});
@@ -116,7 +118,7 @@ class SignupView extends StatelessWidget {
                       fixedSize: const Size(325, 50),
                       elevation: 20,
                     ),
-                    onPressed: onRegister,
+                    onPressed: onSignUp,
                     child: Text(
                       "SIGN UP",
                       style: subFont(size: 15, weight: FontWeight.normal),
@@ -132,7 +134,7 @@ class SignupView extends StatelessWidget {
                       //  shadowColor: Colors.blueAccent.withOpacity(0.5),
                       fixedSize: const Size(330, 60),
                     ),
-                    onPressed: aninymous,
+                    onPressed: () {},
                     child: Text(
                       "Sign In Anonymous",
                       style: mainFont(size: 15, color: Colors.black),
@@ -148,7 +150,7 @@ class SignupView extends StatelessWidget {
                       //  shadowColor: Colors.blueAccent.withOpacity(0.5),
                       fixedSize: const Size(330, 60),
                     ),
-                    onPressed: onGoogleSignin,
+                    onPressed: () {},
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
