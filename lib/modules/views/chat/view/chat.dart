@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_project/modules/utils/globals/globals.dart';
 import 'package:firebase_project/modules/views/intro/view/components/components.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,9 @@ class _ChatViewState extends State<ChatView> {
   Widget build(BuildContext context) {
     int intial = 0;
 
+    List<String> user =
+        ModalRoute.of(context)!.settings.arguments as List<String>;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: widgetColor,
@@ -27,15 +31,27 @@ class _ChatViewState extends State<ChatView> {
           },
           icon: const Icon(Icons.arrow_back_ios),
         ),
-        flexibleSpace: Transform.translate(
-          offset: const Offset(-130, 65),
-          child: CircleAvatar(
-            backgroundColor: cBlack,
-          ),
+        flexibleSpace: Stack(
+          children: [
+            Transform.translate(
+              offset: const Offset(50, 70),
+              child: Container(
+                height: Get.height / 23,
+                width: Get.width / 10,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(05),
+                  image: DecorationImage(
+                    image: NetworkImage("${user[1]}"),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
         centerTitle: true,
         title: Text(
-          "User name",
+          user[0],
           style: subFont(color: Colors.black),
         ),
         actions: [
@@ -65,15 +81,6 @@ class _ChatViewState extends State<ChatView> {
               ];
             },
           ),
-
-          // IconButton(
-          //   onPressed: () {
-          //
-          //   },
-          //   icon: const Icon(
-          //     Icons.more_horiz,
-          //   ),
-          // ),
         ],
       ),
       body: Column(

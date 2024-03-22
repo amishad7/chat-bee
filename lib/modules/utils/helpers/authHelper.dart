@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -43,8 +45,12 @@ class AuthHelper {
       {required LoginCredentials credentials}) async {
     Map<String, dynamic> res = {};
     try {
+      log(" User name: ${credentials.email}      Password : ${credentials.password}");
+
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
-          email: credentials.email, password: credentials.password);
+          email: credentials.email.toLowerCase(),
+          password: credentials.password);
+
       res['user'] = userCredential.user;
     } on FirebaseAuthException catch (e) {
       res['error'] = e.code;

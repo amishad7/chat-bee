@@ -1,10 +1,13 @@
 import 'dart:developer';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_project/modules/utils/globals/globals.dart';
+import 'package:firebase_project/modules/utils/helpers/authHelper.dart';
 import 'package:firebase_project/modules/views/intro/view/components/components.dart';
+import 'package:firebase_project/modules/views/register/views/components/tabs/sign-up/model/signInModel.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import '../../../../../../../utils/helpers/cloudHelper.dart';
 
 class SignInView extends StatelessWidget {
   const SignInView({super.key});
@@ -18,7 +21,6 @@ class SignInView extends StatelessWidget {
       backgroundColor: widgetColor,
       body: SafeArea(
         child: Stack(
-          // mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 20.0, right: 20, left: 10),
@@ -112,6 +114,8 @@ class SignInView extends StatelessWidget {
                             MaterialStateProperty.all(Colors.transparent),
                       ),
                       onPressed: () {
+                        log(usernameEditor.text);
+
                         log('done');
                       },
                       child: Text(
@@ -137,17 +141,25 @@ class SignInView extends StatelessWidget {
                       elevation: 20,
                     ),
                     onPressed: () async {
-                      try {
-                        final credential = await FirebaseAuth.instance
-                            .signInWithEmailAndPassword(
-                                email: usernameEditor.text,
-                                password: passwordEditor.text);
-                      } on FirebaseAuthException catch (e) {
-                        if (e.code == 'user-not-found') {
-                          log('No user found for that email.');
-                        } else if (e.code == 'wrong-password') {
-                          log('Wrong password provided for that user.');
-                        }
+                      LoginCredentials credentials = await LoginCredentials(
+                        email: usernameEditor.text,
+                        password: passwordEditor.text,
+                      );
+
+                      log(" mail :  ${usernameEditor.text}");
+
+                      Map<String, dynamic> res = await AuthHelper.authHelper
+                          .signIn(credentials: credentials);
+                      if (res['error'] != null) {
+                        Fluttertoast.showToast(
+                            msg: "Login failed", textColor: Colors.red);
+                      } else {
+                        usernameEditor.clear();
+                        passwordEditor.clear();
+                        Get.toNamed('/home');
+                        Fluttertoast.showToast(
+                            msg: "Login Success", textColor: Colors.black);
+                        CloudFireStoreHelper.fireStoreHelper.addUser();
                       }
                     },
                     child: Text(

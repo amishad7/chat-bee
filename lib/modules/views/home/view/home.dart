@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_project/modules/utils/globals/globals.dart';
@@ -28,20 +29,26 @@ class HomeView extends StatelessWidget {
       "https://i.pinimg.com/564x/c3/03/b6/c303b694ad53d7d17893f03d09c1941a.jpg",
     ];
 
+    Random random = Random();
+    int imgIndex = Random().nextInt(images.length);
+
     return Scaffold(
+      drawer: Drawer(
+        backgroundColor: Colors.yellow.shade100,
+      ),
       appBar: AppBar(
-        leading: CircleAvatar(
-          radius: 10,
-          backgroundColor: widgetColor,
-          child: const IconButton(
-            onPressed: signOut,
-            icon: Icon(
-              Icons.drag_handle_sharp,
-              color: Colors.white,
-              size: 30,
-            ),
-          ),
-        ),
+        // leading: CircleAvatar(
+        //   radius: 10,
+        //   backgroundColor: widgetColor,
+        //   child: const IconButton(
+        //     onPressed: signOut,
+        //     icon: Icon(
+        //       Icons.drag_handle_sharp,
+        //       color: Colors.white,
+        //       size: 30,
+        //     ),
+        //   ),
+        // ),
         title: (AuthHelper.auth.currentUser?.displayName == null)
             ? Text(
                 "${AuthHelper.auth.currentUser?.email?.split("@")[0].capitalizeFirst}",
@@ -52,7 +59,7 @@ class HomeView extends StatelessWidget {
                 style: subFont(),
               ),
         centerTitle: true,
-        toolbarHeight: 120,
+        toolbarHeight: 100,
         backgroundColor: widgetColor,
         shape: OutlineInputBorder(
           borderSide: BorderSide(color: widgetColor),
@@ -70,17 +77,17 @@ class HomeView extends StatelessWidget {
             List<QueryDocumentSnapshot<Map<String, dynamic>>>? users =
                 snapshot.data?.docs;
 
-            log("${users}");
+            print("${users}");
 
             return ListView.builder(
               shrinkWrap: true,
               itemCount: users?.length,
               itemBuilder: (ctx, i) {
-                log(" title: ${users?[i]['name']} ${users?[i]['email']}");
+                print(" title: ${users?[i]['name']} ${users?[i]['email']}");
 
                 return GestureDetector(
                   onTap: () async {
-                    Get.toNamed('/chat');
+                    print("${images[i]}");
 
                     Chat chat = Chat(
                       message: '',
@@ -91,7 +98,7 @@ class HomeView extends StatelessWidget {
                         .fetchMessage(chatDetails: chat);
                     Get.toNamed('/chat', arguments: [
                       "${users?[i]['name']}",
-                      "${users?[i]['profile_picture']}",
+                      "${images[i]}",
                       "${users?[i]['uid']}",
                     ]);
                   },
@@ -127,7 +134,7 @@ class HomeView extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "${users?[i]['timestamp']}",
+                          "",
                           style: subFont(
                             size: 10,
                             color: Colors.black,
