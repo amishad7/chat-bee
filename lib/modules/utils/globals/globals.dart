@@ -1,4 +1,5 @@
 import 'package:firebase_project/modules/views/chat/view/chat.dart';
+import 'package:firebase_project/modules/views/intro/view/splash2.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,6 +23,10 @@ List<GetPage<dynamic>>? pages = [
   GetPage(
     name: '/intro',
     page: () => const IntroView(),
+  ),
+  GetPage(
+    name: '/intro2',
+    page: () => const SplashView2(),
   ),
 
   GetPage(

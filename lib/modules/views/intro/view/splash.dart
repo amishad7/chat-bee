@@ -14,7 +14,7 @@ class IntroView extends StatelessWidget {
     Timer(
       const Duration(seconds: 6),
       () {
-        Get.offAllNamed('/get');
+        Get.offAllNamed('/intro2');
       },
     );
 

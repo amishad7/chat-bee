@@ -1,14 +1,12 @@
-import 'dart:developer';
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_project/modules/utils/globals/globals.dart';
 import 'package:firebase_project/modules/utils/helpers/authHelper.dart';
 import 'package:firebase_project/modules/views/intro/view/components/components.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../utils/helpers/cloudHelper.dart';
 import '../model/chatModel.dart';
@@ -35,29 +33,72 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       drawer: Drawer(
         backgroundColor: Colors.yellow.shade100,
+        child: Stack(
+          children: [
+            Container(
+              width: Get.width,
+              height: Get.height / 5,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: const Alignment(45, 34),
+                  colors: [
+                    Colors.yellowAccent,
+                    Colors.white70,
+                    Colors.yellow.shade300
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 58.0, top: 78),
+              child: Container(
+                height: Get.height / 5.6,
+                width: Get.width / 2.4,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.yellow,
+                  border: Border.all(width: 8, color: Colors.white),
+                  image: const DecorationImage(
+                    image: NetworkImage(
+                        "https://i.pinimg.com/564x/cc/c5/95/ccc595fcbccb5b97e940a5909382e223.jpg"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 268.0, left: 120),
+              child: Column(
+                children: [
+                  (AuthHelper.auth.currentUser?.displayName == null)
+                      ? Text(
+                          "${AuthHelper.auth.currentUser?.email?.split("@")[0].capitalizeFirst}",
+                          style: subFont(color: Colors.black),
+                        )
+                      : Text(
+                          "${AuthHelper.auth.currentUser?.displayName}",
+                          style: subFont(color: Colors.black),
+                        ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 340, left: 100),
+              child: FilledButton(
+                style: FilledButton.styleFrom(backgroundColor: Colors.black),
+                onPressed: signOut,
+                child: Text(
+                  "Log Out",
+                  style: GoogleFonts.poppins()
+                      .copyWith(color: Colors.white, fontSize: 16),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
       appBar: AppBar(
-        // leading: CircleAvatar(
-        //   radius: 10,
-        //   backgroundColor: widgetColor,
-        //   child: const IconButton(
-        //     onPressed: signOut,
-        //     icon: Icon(
-        //       Icons.drag_handle_sharp,
-        //       color: Colors.white,
-        //       size: 30,
-        //     ),
-        //   ),
-        // ),
-        title: (AuthHelper.auth.currentUser?.displayName == null)
-            ? Text(
-                "${AuthHelper.auth.currentUser?.email?.split("@")[0].capitalizeFirst}",
-                style: subFont(),
-              )
-            : Text(
-                "${AuthHelper.auth.currentUser?.displayName}",
-                style: subFont(),
-              ),
+        title: const Text("Home "),
         centerTitle: true,
         toolbarHeight: 100,
         backgroundColor: widgetColor,
@@ -77,7 +118,7 @@ class HomeView extends StatelessWidget {
             List<QueryDocumentSnapshot<Map<String, dynamic>>>? users =
                 snapshot.data?.docs;
 
-            print("${users}");
+            print("$users");
 
             return ListView.builder(
               shrinkWrap: true,
@@ -108,12 +149,9 @@ class HomeView extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.yellow.withOpacity(0.0),
                       borderRadius: BorderRadius.circular(0),
-                      // border: Border.symmetric(
-                      //   horizontal: BorderSide(color: Colors.yellowAccent, width: 2),
-                      // ),
                     ),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
                           height: Get.height / 18.5,
@@ -126,6 +164,9 @@ class HomeView extends StatelessWidget {
                             ),
                           ),
                         ),
+                        const SizedBox(
+                          width: 45,
+                        ),
                         Text(
                           "${users?[i]['name']}",
                           style: subFont(
@@ -133,13 +174,7 @@ class HomeView extends StatelessWidget {
                             color: Colors.black,
                           ),
                         ),
-                        Text(
-                          "",
-                          style: subFont(
-                            size: 10,
-                            color: Colors.black,
-                          ),
-                        ),
+                        // IconButton(onPressed: () {}, icon: Icon())
                       ],
                     ),
                   ),

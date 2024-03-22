@@ -46,7 +46,7 @@ dependencies:
   cloud_firestore:
   flutter_local_notifications:
   firebase_database: ^10.4.0
-
+  animated_introduction: ^1.0.4
 
 dev_dependencies:
   flutter_test:
